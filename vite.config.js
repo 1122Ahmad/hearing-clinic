@@ -15,11 +15,11 @@ export default defineConfig(({ command }) => {
               secure: false,
             },
           },
-          headers: {
-            // Remove or loosen CSP during local development
-            "Content-Security-Policy":
-              "default-src 'self'; connect-src 'self' http://localhost:5000 ws://localhost:5173; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval';",
-          },
+          // ❌ Remove or comment out the CSP headers — they break React Refresh
+          // headers: {
+          //   "Content-Security-Policy":
+          //     "default-src 'self'; connect-src 'self' http://localhost:5000 ws://localhost:5173; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval';",
+          // },
         }
       : undefined,
     build: {
