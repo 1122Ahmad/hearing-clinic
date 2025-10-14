@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -274,18 +275,25 @@ const Home = () => {
     {/* Buttons Column */}
     <div className="w-full md:w-1/3 flex flex-col gap-6 z-10">
       {services.map((service, index) => (
-        <button
-          key={service.label}
-          onClick={() => setActiveService(service)}
-          className={`w-full py-6 px-6 text-left rounded-lg text-xl md:text-2xl font-semibold transition-all duration-300
-            ${
-              activeService?.label === service.label || (!activeService && index === 0)
-                ? "bg-red-600 text-white"
-                : "bg-white/70 text-red-600 hover:bg-red-100"
-            }`}
-        >
-          {service.label}
-        </button>
+<button
+    key={service.label}
+    onClick={() => {
+      setActiveService(service);  // highlights the selected service
+      if (service.route) {
+        navigate(service.route);  // navigate to the correct route
+      }
+    }}
+    className={`w-full py-6 px-6 text-left rounded-lg text-xl md:text-2xl font-semibold transition-all duration-300
+      ${
+        activeService?.label === service.label || (!activeService && index === 0)
+          ? "bg-red-600 text-white"
+          : "bg-white/70 text-red-600 hover:bg-red-100"
+      }`}
+  >
+    {service.label}
+  </button>
+
+
       ))}
     </div>
 
@@ -308,15 +316,13 @@ const Home = () => {
         <p className="text-lg mb-6">{activeService?.description || services[0].description}</p>
 
         {/* Learn More Button */}
-        <button
-          className="bg-red-600 hover:bg-white hover:text-red-600 text-white px-6 py-3 rounded-md font-semibold border border-red-600 transition duration-300"
-          onClick={() => {
-            /* Placeholder - later you can use navigate('/service-page') */
-            alert("Learn More page coming soon!");
-          }}
-        >
-          Learn More
-        </button>
+{/* Learn More Button */}
+<Link
+  to="/services"
+  className="inline-block bg-red-600 hover:bg-white hover:text-red-600 text-white px-6 py-3 rounded-md font-semibold border border-red-600 transition duration-300"
+>
+  Learn More
+</Link>
       </div>
     </div>
   </div>

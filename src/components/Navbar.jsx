@@ -42,6 +42,7 @@ const Navbar = () => {
 
           {/* Navigation Links */}
           <div className="flex flex-wrap justify-center md:justify-end space-x-4 text-sm font-medium">
+            <Link to="/hearingLoss" className="text-gray-700 hover:text-[#1D4ED8] transition">Hearing Loss</Link>
             <Link to="/services" className="text-gray-700 hover:text-[#1D4ED8] transition">Services</Link>
             <Link to="/about" className="text-gray-700 hover:text-[#1D4ED8] transition">About Us</Link>
             <Link to="/contact" className="text-gray-700 hover:text-[#1D4ED8] transition">Contact Us</Link>

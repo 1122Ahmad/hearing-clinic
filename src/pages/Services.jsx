@@ -106,7 +106,7 @@ const Services = () => {
               </div>
               <p className="text-gray-700 text-md leading-relaxed">{service.description}</p>
               <a
-                href="/contact"
+                href="/appointment"
                 className="inline-block mt-6 text-green-700 font-medium hover:underline"
               >
                 Book this service →

@@ -7,6 +7,7 @@ import About from "./pages/About";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import AppointmentPage from "./pages/AppointmentPage";
+import HearingLoss from "./pages/HearingLoss";
 
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/appointment" element={<AppointmentPage />} />
+          <Route path="/hearingLoss" element={<HearingLoss />} />
         </Routes>
 
         {/* Contact Section - scrolls naturally */}
