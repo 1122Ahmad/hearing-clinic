@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import { motion } from "framer-motion";
+import { Calendar as CalendarIcon, Clock, User, Mail, Phone, CheckCircle, XCircle } from "lucide-react";
 
 const allSlots = [
   "10:00 AM", "10:20 AM", "10:40 AM", "11:00 AM", "11:20 AM", "11:40 AM",
@@ -124,156 +125,210 @@ const AppointmentPage = () => {
   };
 
   return (
-    <section className="py-16 px-4 md:px-12 bg-gray-50 min-h-screen">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-4xl font-bold text-gray-800 text-center mb-8">Book an Appointment</h2>
-
-        {/* Success/Error Messages */}
-        {submitStatus && (
-          <div className={`mb-6 p-4 rounded-md ${
-            submitStatus.type === 'success' 
-              ? 'bg-green-100 text-green-800 border border-green-200' 
-              : 'bg-red-100 text-red-800 border border-red-200'
-          }`}>
-            {submitStatus.message}
-          </div>
-        )}
-
-        {/* Two-column layout */}
-        <div className="flex flex-col md:flex-row gap-6">
-          {/* Left: Calendar */}
-          <div className="md:w-1/2 border p-4 rounded-md">
-            <h3 className="font-semibold text-lg mb-2">Select Date</h3>
-            <Calendar
-              value={date}
-              onChange={setDate}
-              minDate={new Date()} // Prevent past dates
-            />
-          </div>
-
-          {/* Right: Available Slots */}
-          <div className="md:w-1/2 border p-4 rounded-md">
-            <h3 className="text-xl font-semibold text-blue-700 mb-2">Available Slots</h3>
-            {availableSlots.length === 0 ? (
-              <p className="text-gray-500">No slots available on this date.</p>
-            ) : (
-              <div className="grid grid-cols-2 gap-2">
-                {availableSlots.map(slot => (
-                  <button
-                    key={slot}
-                    onClick={() => setSelectedSlot(slot)}
-                    className={`px-4 py-2 rounded-md border transition ${
-                      selectedSlot === slot
-                        ? "bg-blue-700 text-white"
-                        : "bg-white text-blue-700 hover:bg-blue-100"
-                    }`}
-                  >
-                    {slot}
-                  </button>
-                ))}
-              </div>
-            )}
-            <motion.button
-              onClick={handleBookSlot}
-              disabled={!selectedSlot}
-              className={`mt-4 px-6 py-3 rounded-md transition ${
-                selectedSlot 
-                  ? 'bg-green-600 text-white hover:bg-green-500' 
-                  : 'bg-gray-400 text-gray-200 cursor-not-allowed'
-              }`}
-              whileTap={{ scale: selectedSlot ? 0.95 : 1 }}
-            >
-              Book Selected Slot
-            </motion.button>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
+      {/* Hero Section */}
+      <section className="section-padding bg-gradient-to-r from-blue-900 to-blue-800 text-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">Book an Appointment</h1>
+          <p className="text-xl text-blue-100 leading-relaxed">
+            Schedule your hearing consultation with our specialists and take the first step towards better hearing health.
+          </p>
         </div>
+      </section>
 
-        {/* Booking Form Modal */}
-        {showBookingForm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <motion.div 
-              className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full mx-4"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-            >
-              <h3 className="text-xl font-semibold text-blue-700 mb-4">Book Your Appointment</h3>
-              <p className="text-gray-600 mb-4">
-                Selected: {selectedSlot} on {date.toLocaleDateString()}
-              </p>
+      {/* Main Content */}
+      <section className="section-padding">
+        <div className="max-w-5xl mx-auto">
 
-              <form onSubmit={handleSubmitBooking} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Your Name<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={bookingForm.name}
-                    onChange={handleFormChange}
-                    className="w-full border rounded-md px-4 py-2 mt-1"
-                    placeholder="Full Name*"
-                    required
-                  />
+          {/* Success/Error Messages */}
+          {submitStatus && (
+            <div className={`mb-8 p-6 rounded-lg ${
+              submitStatus.type === 'success' 
+                ? 'bg-green-100 text-green-800 border border-green-200' 
+                : 'bg-red-100 text-red-800 border border-red-200'
+            }`}>
+              <div className="flex items-center">
+                {submitStatus.type === 'success' ? (
+                  <CheckCircle className="w-6 h-6 mr-3 text-green-600" />
+                ) : (
+                  <XCircle className="w-6 h-6 mr-3 text-red-600" />
+                )}
+                <span className="font-semibold">{submitStatus.message}</span>
+              </div>
+            </div>
+          )}
+
+          {/* Two-column layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left: Calendar */}
+            <div className="card p-6 shadow-xl">
+              <div className="flex items-center mb-6">
+                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                  <CalendarIcon className="w-5 h-5 text-blue-800" />
                 </div>
+                <h3 className="text-xl font-bold text-blue-900">Select Date</h3>
+              </div>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-100">
+                <Calendar
+                  value={date}
+                  onChange={setDate}
+                  minDate={new Date()} // Prevent past dates
+                  className="w-full"
+                />
+              </div>
+            </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Your Email<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={bookingForm.email}
-                    onChange={handleFormChange}
-                    className="w-full border rounded-md px-4 py-2 mt-1"
-                    placeholder="example@email.com*"
-                    required
-                  />
+            {/* Right: Available Slots */}
+            <div className="card p-6 shadow-xl">
+              <div className="flex items-center mb-6">
+                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                  <Clock className="w-5 h-5 text-blue-800" />
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Phone Number<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={bookingForm.phone}
-                    onChange={handleFormChange}
-                    className="w-full border rounded-md px-4 py-2 mt-1"
-                    placeholder="xxxx-xxxxxxx*"
-                    required
-                  />
+                <h3 className="text-xl font-bold text-blue-900">Available Time Slots</h3>
+              </div>
+              {availableSlots.length === 0 ? (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CalendarIcon className="w-8 h-8 text-gray-400" />
+                  </div>
+                  <p className="text-body text-gray-500">No slots available on this date.</p>
+                  <p className="text-sm text-gray-400 mt-2">Please select a different date.</p>
                 </div>
-
-                <div className="flex gap-3 pt-4">
-                  <button
-                    type="button"
-                    onClick={closeBookingForm}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={`flex-1 px-4 py-2 rounded-md text-white font-medium ${
-                      isSubmitting 
-                        ? 'bg-gray-400 cursor-not-allowed' 
-                        : 'bg-blue-700 hover:bg-blue-800'
+              ) : (
+                <div className="space-y-6">
+                  <div className="grid grid-cols-2 gap-3 max-h-80 overflow-y-auto">
+                    {availableSlots.map(slot => (
+                      <button
+                        key={slot}
+                        onClick={() => setSelectedSlot(slot)}
+                        className={`px-4 py-3 rounded-lg border-2 transition-all duration-300 font-medium ${
+                          selectedSlot === slot
+                            ? "bg-blue-600 text-white border-blue-600 shadow-lg transform scale-105"
+                            : "bg-white text-blue-600 border-blue-200 hover:bg-blue-50 hover:border-blue-400 hover:shadow-md"
+                        }`}
+                      >
+                        {slot}
+                      </button>
+                    ))}
+                  </div>
+                  
+                  <motion.button
+                    onClick={handleBookSlot}
+                    disabled={!selectedSlot}
+                    className={`w-full py-3 px-6 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
+                      selectedSlot 
+                        ? 'btn-primary' 
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     }`}
+                    whileTap={{ scale: selectedSlot ? 0.95 : 1 }}
                   >
-                    {isSubmitting ? 'Booking...' : 'Confirm Booking'}
-                  </button>
+                    <CalendarIcon className="w-4 h-4" />
+                    {selectedSlot ? `Book ${selectedSlot} Slot` : 'Select a Time Slot'}
+                  </motion.button>
                 </div>
-              </form>
-            </motion.div>
+              )}
+            </div>
           </div>
-        )}
-      </div>
-    </section>
+
+          {/* Booking Form Modal */}
+          {showBookingForm && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+              <motion.div 
+                className="bg-white rounded-xl shadow-2xl max-w-md w-full"
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+              >
+                <div className="p-8">
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <CalendarIcon className="w-8 h-8 text-blue-800" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-blue-900 mb-2">Book Your Appointment</h3>
+                    <p className="text-body text-gray-600">
+                      {selectedSlot} on {date.toLocaleDateString()}
+                    </p>
+                  </div>
+
+                  <form onSubmit={handleSubmitBooking} className="space-y-5">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                        <User className="w-4 h-4 mr-2 text-blue-600" />
+                        Your Name<span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={bookingForm.name}
+                        onChange={handleFormChange}
+                        className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-blue-500 focus:outline-none transition-colors"
+                        placeholder="Full Name*"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                        <Mail className="w-4 h-4 mr-2 text-blue-600" />
+                        Your Email<span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={bookingForm.email}
+                        onChange={handleFormChange}
+                        className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-blue-500 focus:outline-none transition-colors"
+                        placeholder="example@email.com*"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                        <Phone className="w-4 h-4 mr-2 text-blue-600" />
+                        Phone Number<span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={bookingForm.phone}
+                        onChange={handleFormChange}
+                        className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-blue-500 focus:outline-none transition-colors"
+                        placeholder="xxxx-xxxxxxx*"
+                        required
+                      />
+                    </div>
+
+                    <div className="flex gap-4 pt-4">
+                      <button
+                        type="button"
+                        onClick={closeBookingForm}
+                        className="flex-1 btn-secondary flex items-center justify-center gap-2"
+                      >
+                        <XCircle className="w-4 h-4" />
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
+                          isSubmitting 
+                            ? 'bg-gray-400 cursor-not-allowed text-white' 
+                            : 'btn-primary'
+                        }`}
+                      >
+                        <CalendarIcon className="w-4 h-4" />
+                        {isSubmitting ? 'Booking...' : 'Confirm Booking'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
   );
 };
 

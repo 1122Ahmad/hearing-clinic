@@ -8,128 +8,111 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// =========================
 // Middleware
-app.use(cors({
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], // Allow requests from your frontend
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+// =========================
+app.use(
+  cors({
+    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], // Allow frontend
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 app.use(express.json());
 
-// MongoDB connection
-const MONGODB_URI = 'mongodb+srv://hearingclinicisb_db_user:Ej45C4XaJRO3W9dl@cluster0.p1hocil.mongodb.net/hearing-clinic?retryWrites=true&w=majority&appName=Cluster0';
+// =========================
+// MongoDB Connection
+// =========================
+const MONGODB_URI =
+  process.env.MONGODB_URI ||
+  'mongodb+srv://hearingclinicisb_db_user:Ej45C4XaJRO3W9dl@cluster0.p1hocil.mongodb.net/hearing-clinic?retryWrites=true&w=majority&appName=Cluster0';
 
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch(err => console.error('MongoDB connection error:', err));
+const connectWithRetry = async () => {
+  try {
+    await mongoose.connect(MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+      maxPoolSize: 10,
+      minPoolSize: 5,
+      maxIdleTimeMS: 30000,
+      connectTimeoutMS: 10000,
+      tls: true,
+      tlsAllowInvalidCertificates: false,
+      tlsAllowInvalidHostnames: false,
+    });
 
+    console.log('✅ Connected to MongoDB');
+  } catch (err) {
+    console.error('❌ MongoDB connection error:', err.message);
+    console.log('⏳ Retrying connection in 5 seconds...');
+    setTimeout(connectWithRetry, 5000);
+  }
+};
+
+// Initial connection
+connectWithRetry();
+
+// =========================
 // Contact Schema
+// =========================
 const contactSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  email: {
-    type: String,
-    required: true,
-    trim: true,
-    lowercase: true
-  },
-  phone: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  message: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
+  name: { type: String, required: true, trim: true },
+  email: { type: String, required: true, trim: true, lowercase: true },
+  phone: { type: String, required: true, trim: true },
+  message: { type: String, required: true, trim: true },
+  createdAt: { type: Date, default: Date.now },
   status: {
     type: String,
     enum: ['new', 'contacted', 'resolved'],
-    default: 'new'
-  }
+    default: 'new',
+  },
 });
 
 const Contact = mongoose.model('Contact', contactSchema);
 
+// =========================
 // Appointment Schema
+// =========================
 const appointmentSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  email: {
-    type: String,
-    required: true,
-    trim: true,
-    lowercase: true
-  },
-  phone: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  date: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  time: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
+  name: { type: String, required: true, trim: true },
+  email: { type: String, required: true, trim: true, lowercase: true },
+  phone: { type: String, required: true, trim: true },
+  date: { type: String, required: true, trim: true },
+  time: { type: String, required: true, trim: true },
+  createdAt: { type: Date, default: Date.now },
   status: {
     type: String,
     enum: ['scheduled', 'confirmed', 'completed', 'cancelled'],
-    default: 'scheduled'
-  }
+    default: 'scheduled',
+  },
 });
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 
+// =========================
 // Routes
+// =========================
+
+// Root route
 app.get('/', (req, res) => {
   res.json({ message: 'Hearing Clinic API Server is running!' });
 });
 
-// Submit contact form
+// --------------------
+// Contact Routes
+// --------------------
 app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
 
-    // Validate required fields
     if (!name || !email || !phone || !message) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'All fields are required' 
-      });
+      return res
+        .status(400)
+        .json({ success: false, message: 'All fields are required' });
     }
 
-    // Create new contact
-    const contact = new Contact({
-      name,
-      email,
-      phone,
-      message
-    });
-
+    const contact = new Contact({ name, email, phone, message });
     await contact.save();
 
     res.status(201).json({
@@ -139,37 +122,25 @@ app.post('/api/contact', async (req, res) => {
         id: contact._id,
         name: contact.name,
         email: contact.email,
-        createdAt: contact.createdAt
-      }
+        createdAt: contact.createdAt,
+      },
     });
-
   } catch (error) {
     console.error('Error saving contact:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error'
-    });
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
-// Get all contacts (for admin purposes)
 app.get('/api/contacts', async (req, res) => {
   try {
     const contacts = await Contact.find().sort({ createdAt: -1 });
-    res.json({
-      success: true,
-      data: contacts
-    });
+    res.json({ success: true, data: contacts });
   } catch (error) {
     console.error('Error fetching contacts:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error'
-    });
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
-// Update contact status
 app.patch('/api/contacts/:id/status', async (req, res) => {
   try {
     const { id } = req.params;
@@ -182,63 +153,56 @@ app.patch('/api/contacts/:id/status', async (req, res) => {
     );
 
     if (!contact) {
-      return res.status(404).json({
-        success: false,
-        message: 'Contact not found'
-      });
+      return res
+        .status(404)
+        .json({ success: false, message: 'Contact not found' });
     }
 
     res.json({
       success: true,
       message: 'Contact status updated successfully',
-      data: contact
+      data: contact,
     });
-
   } catch (error) {
     console.error('Error updating contact status:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error'
-    });
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
-// Book appointment
+// --------------------
+// Appointment Routes
+// --------------------
 app.post('/api/appointments', async (req, res) => {
   try {
     const { name, email, phone, date, time } = req.body;
 
-    // Validate required fields
     if (!name || !email || !phone || !date || !time) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'All fields are required' 
+      return res
+        .status(400)
+        .json({ success: false, message: 'All fields are required' });
+    }
+
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        success: false,
+        message:
+          'Database connection is not available. Please try again later.',
       });
     }
 
-    // Check if slot is already booked
     const existingAppointment = await Appointment.findOne({
-      date: date,
-      time: time,
-      status: { $in: ['scheduled', 'confirmed'] }
+      date,
+      time,
+      status: { $in: ['scheduled', 'confirmed'] },
     });
 
     if (existingAppointment) {
-      return res.status(400).json({
-        success: false,
-        message: 'This time slot is already booked'
-      });
+      return res
+        .status(400)
+        .json({ success: false, message: 'This time slot is already booked' });
     }
 
-    // Create new appointment
-    const appointment = new Appointment({
-      name,
-      email,
-      phone,
-      date,
-      time
-    });
-
+    const appointment = new Appointment({ name, email, phone, date, time });
     await appointment.save();
 
     res.status(201).json({
@@ -250,58 +214,52 @@ app.post('/api/appointments', async (req, res) => {
         email: appointment.email,
         date: appointment.date,
         time: appointment.time,
-        createdAt: appointment.createdAt
-      }
+        createdAt: appointment.createdAt,
+      },
     });
-
   } catch (error) {
     console.error('Error booking appointment:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error'
-    });
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
-// Get all appointments (for admin purposes)
 app.get('/api/appointments', async (req, res) => {
   try {
     const appointments = await Appointment.find().sort({ createdAt: -1 });
-    res.json({
-      success: true,
-      data: appointments
-    });
+    res.json({ success: true, data: appointments });
   } catch (error) {
     console.error('Error fetching appointments:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error'
-    });
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
-// Get appointments for a specific date
 app.get('/api/appointments/date/:date', async (req, res) => {
   try {
     const { date } = req.params;
-    const appointments = await Appointment.find({ 
-      date: date,
-      status: { $in: ['scheduled', 'confirmed'] }
+
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        success: false,
+        message:
+          'Database connection is not available. Please try again later.',
+      });
+    }
+
+    const appointments = await Appointment.find({
+      date,
+      status: { $in: ['scheduled', 'confirmed'] },
     });
-    res.json({
-      success: true,
-      data: appointments
-    });
+
+    res.json({ success: true, data: appointments });
   } catch (error) {
     console.error('Error fetching appointments for date:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error'
-    });
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
-// Start server
+// =========================
+// Start Server
+// =========================
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`🚀 Server is running on port ${PORT}`);
 });
