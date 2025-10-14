@@ -249,6 +249,7 @@ const HearingAidFAQ = () => {
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             Hearing Aid Tips & FAQs
           </h1>
+          <div className="w-32 h-1.5 bg-gradient-to-r from-white-400 to-white-500 mx-auto mb-8 rounded-full"></div>
           <p className="text-xl md:text-2xl mb-10 text-blue-100 max-w-3xl mx-auto">
             Everything you need to know about caring for your hearing aids and maximizing their performance
           </p>

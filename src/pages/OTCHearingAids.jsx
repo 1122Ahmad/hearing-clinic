@@ -117,8 +117,21 @@ const OTCHearingAids = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white py-24 px-4 overflow-hidden">
-        {/* Animated Background Elements */}
+   <section className="relative text-white py-24 overflow-hidden w-screen max-w-[100vw] -mx-[calc(50vw-50%)]" style={{
+        backgroundImage: "url('/images/bannerbg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        left: "50%",
+        right: "50%",
+        marginLeft: "-50vw",
+        marginRight: "-50vw",
+        width: "100vw",
+        position: "relative"
+        
+      }}>
+        {/* Blue Overlay */}
+        <div className="absolute inset-0 bg-blue-900/80"></div>
+      
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-blob"></div>
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
@@ -131,7 +144,7 @@ const OTCHearingAids = () => {
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
               OTC Hearing Aids in Islamabad
             </h1>
-            <div className="w-32 h-1.5 bg-gradient-to-r from-green-400 to-green-500 mx-auto mb-8 rounded-full"></div>
+            <div className="w-32 h-1.5 bg-gradient-to-r from-white-400 to-white-500 mx-auto mb-8 rounded-full"></div>
           </div>
             <div className="text-lg text-blue-100 leading-relaxed space-y-4">
               <p>
