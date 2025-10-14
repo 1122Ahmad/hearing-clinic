@@ -1,0 +1,55 @@
+[33mcommit 99e824db6ee9feb1329bb74f82f41e4c488b8016[m
+Author: Ahmad Faraz <ahmadfarazbaloch@gmail.com>
+Date:   Tue Oct 14 15:33:30 2025 +0500
+
+    Ahmad Faraz
+
+.gitignore
+README.md
+eslint.config.js
+index.html
+package-lock.json
+package.json
+postcss.config.js
+public/images/Ecommerce.jpg
+public/images/Song.jpg
+public/images/mentalH.jpg
+public/images/parameterExtraction.jpg
+public/images/portF.png
+public/vite.svg
+src/App.css
+src/App.jsx
+src/assets/Aid.png
+src/assets/HearingAid.jpg
+src/assets/audiologist-bg.jpg
+src/assets/background.jpg
+src/assets/couple-ocean.jpg
+src/assets/deafness.png
+src/assets/doctor-otoscope.jpg
+src/assets/ear-soundwave.jpg
+src/assets/earwax-bg.png
+src/assets/earwax.png
+src/assets/fitting-bg.png
+src/assets/girl-bg.jpg
+src/assets/headphones.png
+src/assets/hearProtection-bg.png
+src/assets/logo.jpeg
+src/assets/react.svg
+src/assets/repair-bg.png
+src/assets/repair.png
+src/assets/services.jpg
+src/assets/testing-bg.png
+src/assets/tinnitus-bg.png
+src/assets/tinnitus.png
+src/components/ContactSection.jsx
+src/components/Footer.jsx
+src/components/Navbar.jsx
+src/index.css
+src/main.jsx
+src/pages/About.jsx
+src/pages/Audiologist.jsx
+src/pages/Contact.jsx
+src/pages/Home.jsx
+src/pages/Services.jsx
+tailwind.config.js
+vite.config.js

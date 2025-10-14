@@ -8,27 +8,25 @@ export default defineConfig(({ command }) => {
     plugins: [react()],
     server: isDev
       ? {
-          // Dev-only header to allow eval-based dev tools (HMR / some source maps).
-          // Remove or disable this for any remote/dev preview that should enforce strict CSP.
+          proxy: {
+            "/api": {
+              target: "http://localhost:5000",
+              changeOrigin: true,
+              secure: false,
+            },
+          },
           headers: {
+            // Remove or loosen CSP during local development
             "Content-Security-Policy":
-              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline';",
+              "default-src 'self'; connect-src 'self' http://localhost:5000 ws://localhost:5173; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval';",
           },
         }
       : undefined,
     build: {
-      // Avoid generating eval-style sourcemaps in production bundles
       sourcemap: false,
-      // Optional: further minimize any dev-only helpers that could use eval
       rollupOptions: {
-        output: {
-          // keep code splitting / names predictable
-        },
+        output: {},
       },
-    },
-    esbuild: {
-      // Keep esbuild from emitting eval-heavy constructs for production builds
-      // No config required here for typical apps, left for clarity
     },
   };
 });

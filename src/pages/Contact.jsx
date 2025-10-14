@@ -1,4 +1,61 @@
+import { useState } from 'react';
+
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    console.log('Submitting form with data:', formData);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+
+      const result = await response.json();
+      console.log('Response data:', result);
+
+      if (result.success) {
+        setSubmitStatus({ type: 'success', message: result.message });
+        setFormData({ name: '', email: '', phone: '', message: '' });
+      } else {
+        setSubmitStatus({ type: 'error', message: result.message });
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus({ 
+        type: 'error', 
+        message: 'Failed to send message. Please try again.' 
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       <h2 className="text-3xl font-bold text-blue-700 mb-2">
@@ -10,8 +67,19 @@ const Contact = () => {
 
       <div className="mt-10 grid md:grid-cols-2 gap-10">
         {/* Contact Form */}
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <h4 className="text-lg font-semibold text-blue-700">Send Us a Message</h4>
+
+          {/* Status Messages */}
+          {submitStatus && (
+            <div className={`p-4 rounded-md ${
+              submitStatus.type === 'success' 
+                ? 'bg-green-100 text-green-800 border border-green-200' 
+                : 'bg-red-100 text-red-800 border border-red-200'
+            }`}>
+              {submitStatus.message}
+            </div>
+          )}
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -19,8 +87,11 @@ const Contact = () => {
             </label>
             <input
               type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               className="w-full border rounded-md px-4 py-2 mt-1"
-              placeholder="Ahmad Ali*"
+              placeholder="Full Name*"
               required
             />
           </div>
@@ -31,8 +102,11 @@ const Contact = () => {
             </label>
             <input
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               className="w-full border rounded-md px-4 py-2 mt-1"
-              placeholder="ahmadali123@email.com*"
+              placeholder="example@email.com*"
               required
             />
           </div>
@@ -43,8 +117,11 @@ const Contact = () => {
             </label>
             <input
               type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
               className="w-full border rounded-md px-4 py-2 mt-1"
-              placeholder="123.456.7890*"
+              placeholder="xxxx-xxxxxxx*"
               required
             />
           </div>
@@ -55,6 +132,9 @@ const Contact = () => {
             </label>
             <textarea
               rows="5"
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
               className="w-full border rounded-md px-4 py-2 mt-1"
               placeholder="Your Message*"
               required
@@ -63,9 +143,14 @@ const Contact = () => {
 
           <button
             type="submit"
-            className="bg-blue-700 text-white px-6 py-2 rounded-md"
+            disabled={isSubmitting}
+            className={`px-6 py-2 rounded-md text-white font-medium transition-colors ${
+              isSubmitting 
+                ? 'bg-gray-400 cursor-not-allowed' 
+                : 'bg-blue-700 hover:bg-blue-800'
+            }`}
           >
-            Send Message
+            {isSubmitting ? 'Sending...' : 'Send Message'}
           </button>
         </form>
 
