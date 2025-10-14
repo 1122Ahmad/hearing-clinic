@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional: Basic global settings */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  font-family: sans-serif;
+}
