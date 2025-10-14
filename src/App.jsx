@@ -7,6 +7,10 @@ import About from "./pages/About";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import AppointmentPage from "./pages/AppointmentPage";
+import HearingAidFAQ from "./pages/HearingAidFAQ";
+import BestHearingAids from "./pages/BestHearingAids";
+import HearingAidBrands from "./pages/HearingAidBrands";
+import OTCHearingAids from "./pages/OTCHearingAids";
 
 
 const App = () => {
@@ -25,6 +29,10 @@ const App = () => {
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/appointment" element={<AppointmentPage />} />
+          <Route path="/hearing-aids/faq" element={<HearingAidFAQ />} />
+          <Route path="/hearing-aids" element={<BestHearingAids />} />
+          <Route path="/hearing-aids/brands" element={<HearingAidBrands />} />
+          <Route path="/hearing-aids/otc" element={<OTCHearingAids />} />
         </Routes>
 
         {/* Contact Section - scrolls naturally */}
