@@ -276,7 +276,9 @@ const HearingAidFAQ = () => {
       <section className="py-20 px-4 bg-gradient-to-b from-white to-blue-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16" data-aos="fade-up">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4">
+            <h2
+              className="block overflow-visible py-2 text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4 leading-tight"
+            >
               Hearing Aid Impact by the Numbers
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -295,7 +297,7 @@ const HearingAidFAQ = () => {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16" data-aos="fade-up">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4">
+            <h2 className="block overflow-visible py-3 text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4">
               Quick Hearing Aid Tips
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -314,7 +316,7 @@ const HearingAidFAQ = () => {
       <section className="py-20 px-4 bg-gradient-to-b from-blue-50 to-white">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12" data-aos="fade-up">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4">
+            <h2 className="block overflow-visible py-2 text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4">
               Frequently Asked Questions
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
