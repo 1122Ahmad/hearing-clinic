@@ -7,57 +7,57 @@ const faqData = [
   {
     id: 1,
     question: "Is Investing In Hearing Aids Worthwhile?",
-    answer: "Yes, hearing aids are a worthwhile investment for more than their ability to help you hear better. Hearing aids can help improve your overall quality of life. Because you won't have such a difficult time hearing conversations, hearing aids will help you enjoy social situations and better connect with friends and family.\n\nUntreated hearing loss has also been shown to increase the risks of developing anxiety and depression. Improving your social connections by getting hearing aids can also improve your mood. Even more significantly, the risk of cognitive decline can be reduced, and some cognitive functions can even be improved by using hearing aids."
+    answer: "Yes. Hearing aids not only improve hearing but also enhance your overall quality of life. They make conversations easier, boost confidence, reduce anxiety and depression risks, and may even help prevent cognitive decline."
   },
   {
     id: 2,
     question: "Can Tinnitus Symptoms be Reduced by Using Hearing Aids?",
-    answer: "A survey of hearing professionals conducted in 2007 revealed that hearing aids provided some relief to 60% of people with tinnitus symptoms and provided significant relief to nearly 25%. Tinnitus and hearing loss often go hand-in-hand, so to learn if hearing aids might help, you should make an appointment for a hearing test if you have ringing in your ears."
+    answer: "Yes, many people with tinnitus find relief using hearing aids. Studies show they ease symptoms in up to 60% of users. If you have ringing in your ears, a hearing test can help determine if hearing aids may help."
   },
   {
     id: 3,
     question: "What Causes Hearing Aids to Have Feedback?",
-    answer: "Your hearing aids may have feedback for a number of reasons, and luckily, they're all fairly easy to fix. The following are a few reasons why a hearing aid may experience feedback and how to make it stop:\n\n• Contact – When you come into physical contact with someone or bump your hearing aid against your phone, you may get a quick bust of feedback. The sound waves traveling to your ear could be obstructed by a scarf or hat, which could also possibly cause some feedback. Your hearing aid should return to normal after a quick adjustment.\n\n• High volume – You will be more likely to experience feedback when the volume on your hearing aid is set to a really loud setting. Your hearing aid may need an adjustment if you repeatedly need the volume turned way up.\n\n• Fit – If your hearing aids don't fit properly, feedback is often the result. Removing and re-inserting them is the simple and quick solution. If that's not helpful, we can help you with an adjustment."
+    answer: "Feedback may occur due to high volume, poor fit, or contact with objects like phones or scarves. Repositioning, lowering volume, or refitting usually solves it. If not, a quick professional adjustment can fix the issue."
   },
   {
     id: 4,
     question: "Is It Possible to Adjust or Reprogram Hearing Aids?",
-    answer: "Yes, it's very easy for us to do an adjustment or reprogramming. Simply give us a call so we can help. Many modern hearing aids can have different settings custom-programmed for different listening environments."
+    answer: "Yes. We can easily adjust or reprogram your hearing aids to suit your environment or comfort. Simply call us for a quick appointment modern models support multiple listening settings."
   },
   {
     id: 5,
     question: "Can Balance be Improved by Using Hearing Aids?",
-    answer: "There's limited research on this. However, for those who cope with hearing loss, balance can be improved when their hearing loss is treated, according to one study. The results of this study revealed that people with hearing loss did worse on a balance test when their hearing aids were turned off and performed better when they were on."
+    answer: "Some research shows people with hearing loss perform better on balance tests when using hearing aids. Treating hearing loss may help improve stability and overall coordination."
   },
   {
     id: 6,
     question: "What Would Cause My Hearing Aid to Quit Working?",
-    answer: "Much like other technological tools, hearing aids may stop working correctly on occasion. The issue is usually an easy fix, like a low battery. All hearing aids use a battery for power. Depending on which features you are using, you will usually get several days from a single battery charge. You will eventually need to replace even rechargeable batteries. If your hearing aid fails to power up or has poor, or weak sound quality, it could be due to a low battery. Your hearing aid may be in need of a cleaning in other cases. Discomfort, muted sound, and feedback can be the result of a dirty hearing aid. Your hearing aid will be fine if you clean it regularly and take it in once every year for a professional cleaning."
+    answer: "Common reasons include low or dead batteries and earwax buildup. Regular cleaning, proper charging, and annual professional maintenance usually prevent most issues and ensure optimal sound quality."
   },
   {
     id: 7,
     question: "Are Hearing Aids Compatible with Cell Phones?",
-    answer: "The majority of modern hearing aids can connect to cell phones. A smartphone can be paired via Bluetooth connectivity to most modern hearing aids, and you can get even better control of your hearing aids with the help of one of several available apps. Some hearing aids are even specifically designed to be paired with smartphones. These specific hearing aids not only allow the user to enjoy stereo streaming of music and video content, but they also allow the user to make truly 'hands-free' calls. Other models often require a separate device to facilitate connectivity, unlike these direct connect models. We can demonstrate the technology to you; just come in and see us."
+    answer: "Most modern hearing aids connect via Bluetooth for streaming calls, music, and videos. Some models offer direct smartphone pairing for hands-free use, while others may need a small accessory device."
   },
   {
     id: 8,
     question: "What Level of Water Resistance Does a Hearing Aid Have?",
-    answer: "Although most hearing aids are somewhat resistant to water, most are not waterproof. That means that if you get caught in a sudden rainstorm or forget to remove them before showering, you'll probably be fine, but it also means that you can't go swimming with them in. It's worth mentioning, though, that a hearing aid will be in its optimal working conditions when it's dry and clean. When a hearing aid is exposed to too much moisture, it causes bacterial growth on the shell and can damage the delicate electronic components inside. Storing your hearing aids in a dry, clean place when you're not wearing them and using a dehumidifier if there is excessive humidity are some practical steps you can take to keep your hearing aids dry."
+    answer: "Most hearing aids are water-resistant but not waterproof. Light rain or sweat is fine, but avoid swimming or showers. Keep them dry, clean, and stored in a dehumidifier for long-term reliability."
   },
   {
     id: 9,
     question: "How Often Should Hearing Aids Be Cleaned?",
-    answer: "Doing a daily, monthly, and yearly cleaning routine will be your best bet. The first thing to do before going to bed is to wipe down your hearing aids and store them in their case. We will teach you a specific monthly cleaning technique that you should stick to. You should make an appointment with us once every year to have your current level of hearing loss checked and have your hearing aids professionally cleaned."
+    answer: "Wipe them daily before bed, follow a monthly cleaning routine, and visit us yearly for professional service. Regular cleaning ensures comfort, durability, and clear sound performance."
   },
   {
     id: 10,
     question: "How Do I Get the Most Out of My Batteries?",
-    answer: "In order to get the most life out of your batteries, make sure to use up your old ones before replacing them with new ones, and check the expiration date when you buy new batteries to ensure you get the freshest ones. Become familiar with the storage and handling guidelines for zinc since most hearing aid batteries are made of it. Zinc batteries will start to drain right after you pull the activation tab off, for example. However, you could get as many as three additional days of battery life if you pull the tab and then wait five minutes before inserting the battery into your hearing aid. Never put batteries in the freezer because it will make them drain faster; instead, store your batteries in a dry, clean spot when you're not using your hearing aid."
+    answer: "Use older batteries first and check expiration dates. Wait 5 minutes after pulling the tab before inserting. Store them in a dry place never in the freezer to maximize battery life."
   },
   {
     id: 11,
     question: "How Do I Deal with Older, Used Hearing Aids?",
-    answer: "When you get a new pair of hearing aids, you shouldn't throw away your old ones. It's better to donate the old pair so that someone in need can benefit from them. Organizations like the Starkey Foundation and the Lions Club will collect and redistribute used hearing aids. There are plenty of people out there with hearing loss who can't afford to buy hearing aids, and these organizations are dedicated to making sure those people are still able to have the gift of better hearing. You also may qualify for a tax credit in addition to helping people who are less fortunate."
+    answer: "Donate them to groups like the Starkey Foundation or Lions Club. Your old devices can help others in need, and you may even qualify for a small tax credit for your contribution."
   }
 ];
 
