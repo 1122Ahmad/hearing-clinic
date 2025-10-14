@@ -21,7 +21,7 @@ const Navbar = () => {
             Call or Text Us
           </a>
           <a
-            href="/contact"
+            href="/appointment"
             className="bg-[#DC2626] text-white px-3 py-1 rounded-md font-semibold hover:bg-white hover:text-[#DC2626] border border-white transition"
           >
             Schedule Appointment

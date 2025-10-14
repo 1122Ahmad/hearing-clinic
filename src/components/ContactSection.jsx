@@ -7,7 +7,7 @@ const ContactSection = () => {
         <p>Shop no 02 Main PWD Road Near London Baker Opposite Sitara Studio</p>
         <p>Islamabad</p>
         <p>
-          <a href="tel:03001232863" className="underline hover:text-blue-200">
+          <a href="tel:+923001232863" className="underline hover:text-blue-200">
             03001232863
           </a>
         </p>
