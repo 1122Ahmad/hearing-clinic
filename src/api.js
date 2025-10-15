@@ -58,6 +58,11 @@ const API = {
     return this.request(`/api/appointments/date/${date}`);
   },
 
+  // Get unavailable slots (admin/doctor bookings)
+  async getUnavailableSlots(date) {
+    return this.request(`/api/unavailable-slots/date/${date}`);
+  },
+
   // Health check
   async healthCheck() {
     return this.request('/api/health');

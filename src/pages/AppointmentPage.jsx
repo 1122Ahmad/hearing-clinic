@@ -19,6 +19,7 @@ const AppointmentPage = () => {
   const [date, setDate] = useState(new Date());
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [bookedSlots, setBookedSlots] = useState([]);
+  const [unavailableSlots, setUnavailableSlots] = useState([]);
   const [availableSlots, setAvailableSlots] = useState([]);
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,34 +34,102 @@ const AppointmentPage = () => {
   // Debug: Log component mount
   console.log('AppointmentPage component mounted');
 
-      // Fetch booked slots for the selected date
+      // Fetch booked slots and unavailable slots for the selected date
       useEffect(() => {
-        const fetchBookedSlots = async () => {
+        const fetchSlots = async () => {
           try {
-            console.log('Fetching booked slots for date:', date);
-            const dateStr = date.toISOString().split("T")[0];
-            const result = await API.getAppointmentsByDate(dateStr);
+            console.log('Fetching slots for date:', date);
+            console.log('Date toISOString:', date.toISOString());
             
-            console.log('Booked slots result:', result);
-            if (result.success) {
-              const bookedTimes = result.data.map(appointment => appointment.time);
+            // Fix timezone issue by using local date formatting
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const dateStr = `${year}-${month}-${day}`;
+            
+            console.log('Date string being sent:', dateStr);
+            
+            // Fetch user appointments
+            const appointmentsResult = await API.getAppointmentsByDate(dateStr);
+            console.log('Booked slots result:', appointmentsResult);
+            
+            // Fetch admin unavailable slots (surgery slots)
+            const unavailableResult = await API.getUnavailableSlots(dateStr);
+            
+            if (unavailableResult.success) {
+              setUnavailableSlots(unavailableResult.data);
+            } else {
+              setUnavailableSlots([]);
+            }
+            
+            if (appointmentsResult.success) {
+              const bookedTimes = appointmentsResult.data.map(appointment => appointment.time);
               setBookedSlots(bookedTimes);
             }
+            
+            if (unavailableResult.success) {
+              setUnavailableSlots(unavailableResult.data);
+            }
           } catch (error) {
-            console.error('Error fetching booked slots:', error);
+            console.error('Error fetching slots:', error);
             // Don't crash the component, just log the error
           }
         };
 
-        fetchBookedSlots();
+        fetchSlots();
       }, [date]);
 
-  // Update available slots when date or booked slots change
+  // Update available slots when date, booked slots, or unavailable slots change
   useEffect(() => {
-    const dateStr = date.toISOString().split("T")[0];
-    setAvailableSlots(allSlots.filter(slot => !bookedSlots.includes(slot)));
+    // Fix timezone issue by using local date formatting
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const dateStr = `${year}-${month}-${day}`;
+
+    // Convert unavailable slots (with start/end times) to AM/PM strings
+    const surgerySlots = unavailableSlots.flatMap(slot => {
+      const start = new Date(slot.startTime);
+      const end = new Date(slot.endTime);
+
+      const timeToLabel = (time) =>
+        time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+
+      const startLabel = timeToLabel(start);
+      const endLabel = timeToLabel(end);
+
+      // Find all slots that fall between start and end (inclusive)
+      const slotsToRemove = [];
+      for (let i = 0; i < allSlots.length; i++) {
+        const slotTime = allSlots[i];
+        
+        // Create a date object for the selected date with the slot time
+        const slotDate = new Date(date);
+        const [time, period] = slotTime.split(' ');
+        const [hours, minutes] = time.split(':');
+        let hour24 = parseInt(hours);
+        if (period === 'PM' && hour24 !== 12) hour24 += 12;
+        if (period === 'AM' && hour24 === 12) hour24 = 0;
+        
+        slotDate.setHours(hour24, parseInt(minutes), 0, 0);
+        
+        if (slotDate >= start && slotDate < end) {
+          slotsToRemove.push(slotTime);
+        }
+      }
+      
+      return slotsToRemove;
+    });
+
+    // Merge booked slots + unavailable slots
+    const allUnavailable = [...bookedSlots, ...surgerySlots];
+
+    // Filter
+    const filteredSlots = allSlots.filter(slot => !allUnavailable.includes(slot));
+
+    setAvailableSlots(filteredSlots);
     setSelectedSlot(null);
-  }, [date, bookedSlots]);
+  }, [date, bookedSlots, unavailableSlots]);
 
   const handleBookSlot = () => {
     if (!selectedSlot) {
@@ -185,6 +254,32 @@ const AppointmentPage = () => {
                 </div>
                 <h3 className="text-xl font-bold text-blue-900">Available Time Slots</h3>
               </div>
+              {/* Show unavailable slots (admin bookings) if any */}
+              {unavailableSlots.length > 0 && (
+                <div className="mb-6 p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                  <div className="flex items-center mb-3">
+                    <Clock className="w-5 h-5 text-orange-600 mr-2" />
+                    <h4 className="font-semibold text-orange-800">Doctor Unavailable</h4>
+                  </div>
+                  <p className="text-sm text-orange-700 mb-3">
+                    The following slots are unavailable due to doctor's schedule:
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {unavailableSlots.map(slot => {
+                      const start = new Date(slot.startTime);
+                      const end = new Date(slot.endTime);
+                      const startTime = start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+                      const endTime = end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+                      return (
+                        <span key={slot._id} className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
+                          {startTime} - {endTime}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
               {availableSlots.length === 0 ? (
                 <div className="text-center py-8">
                   <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">

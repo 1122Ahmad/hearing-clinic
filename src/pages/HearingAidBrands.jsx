@@ -86,8 +86,8 @@ const brands = [
 const BrandCard = ({ brand, index }) => {
   const Icon = brand.icon;
 
-  // Set larger size for Unitron (id: 3)
-  const imageSize = brand.id === 3 ? "w-90 h-90" : "w-40 h-40";
+  // Set size for Unitron (id: 3) to match other cards
+  const imageSize = brand.id === 3 ? "w-40 h-40" : "w-40 h-40";
 
   return (
     <div

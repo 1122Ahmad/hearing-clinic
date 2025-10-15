@@ -45,7 +45,7 @@ const hearingAidTypes = [
     title: "In-the-Canal Hearing Aids",
     icon: Settings,
     description:
-      "In-the-canal (ITC) hearing aids sit partly inside the ear canal and are partially visible. They balance comfort, power, and subtle appearance.",
+      "In-the-canal (ITC) hearing aids sit partly inside the ear canal and are partially visible. They balance comfort, power, and subtle appearance for optimal hearing.",
     pros: [
       "Comfortable fit for many users",
       "Longer battery life than smaller types",

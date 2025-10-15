@@ -24,28 +24,58 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
       process.env.FRONTEND_URL?.replace(/\/$/, ''), // Remove trailing slash
       process.env.FRONTEND_URL + '/', // Add trailing slash
     ].filter(Boolean) // Remove undefined values
-  : ['http://localhost:5173', 'http://127.0.0.1:5173'];
+  : [
+      'http://localhost:5173', 
+      'http://127.0.0.1:5173',
+      'http://localhost:3000',
+      'http://127.0.0.1:3000'
+    ];
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-      
-      // Check if origin is in allowed origins
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-      
-      console.log('CORS: Blocked origin:', origin);
-      console.log('CORS: Allowed origins:', allowedOrigins);
-      return callback(new Error('Not allowed by CORS'));
-    },
+// Force CORS to allow localhost:5173
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
+// For development, use more permissive CORS
+if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {
+  app.use(cors({
+    origin: true,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-  })
-);
+  }));
+} else {
+  app.use(
+    cors({
+      origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        // Check if origin is in allowed origins
+        if (allowedOrigins.includes(origin)) {
+          return callback(null, true);
+        }
+        
+        console.log('CORS: Blocked origin:', origin);
+        console.log('CORS: Allowed origins:', allowedOrigins);
+        console.log('CORS: Current NODE_ENV:', process.env.NODE_ENV);
+        return callback(new Error('Not allowed by CORS'));
+      },
+      credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    })
+  );
+}
 app.use(express.json());
 
 // Note: Static file serving removed for separate deployment
@@ -116,6 +146,23 @@ const appointmentSchema = new mongoose.Schema({
 });
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);
+
+// =========================
+// Surgery Slot Schema (Admin Unavailable Slots)
+// =========================
+const surgerySlotSchema = new mongoose.Schema({
+  title: { type: String, required: true, trim: true },
+  description: { type: String, required: true, trim: true },
+  startTime: { type: Date, required: true },
+  endTime: { type: Date, required: true },
+  createdBy: { type: String, required: true, trim: true },
+  createdAt: { type: Date, default: Date.now },
+});
+
+const SurgerySlot = mongoose.model('SurgerySlot', surgerySlotSchema);
+
+// Debug: Verify SurgerySlot model is loaded
+console.log('✅ SurgerySlot model loaded:', SurgerySlot ? 'Yes' : 'No');
 
 // =========================
 // Routes
@@ -283,6 +330,48 @@ app.get('/api/appointments/date/:date', async (req, res) => {
     res.json({ success: true, data: appointments });
   } catch (error) {
     console.error('Error fetching appointments for date:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
+// Get unavailable slots (admin/doctor bookings) for a specific date
+app.get('/api/unavailable-slots/date/:date', async (req, res) => {
+  try {
+    const { date } = req.params;
+    console.log('Fetching unavailable slots for date:', date);
+
+    if (mongoose.connection.readyState !== 1) {
+      console.log('Database not connected');
+      return res.status(503).json({
+        success: false,
+        message:
+          'Database connection is not available. Please try again later.',
+      });
+    }
+
+    // Get surgery slots (admin unavailable slots)
+    const surgerySlots = await SurgerySlot.find({
+      startTime: {
+        $gte: new Date(`${date}T00:00:00.000Z`),
+        $lt: new Date(`${date}T23:59:59.999Z`)
+      }
+    });
+    
+    console.log('Found surgery slots:', surgerySlots.length);
+
+    // If no surgery slots, return empty array
+    if (surgerySlots.length === 0) {
+      console.log('No surgery slots found for this date');
+      return res.json({ success: true, data: [] });
+    }
+
+    // Return the raw surgery slot objects for frontend processing
+    console.log('Surgery slots found:', surgerySlots.length);
+    console.log('Returning surgery slots:', surgerySlots);
+
+    res.json({ success: true, data: surgerySlots });
+  } catch (error) {
+    console.error('Error fetching unavailable slots for date:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
