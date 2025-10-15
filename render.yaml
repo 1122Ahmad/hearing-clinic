@@ -16,4 +16,4 @@ services:
           name: hearing-clinic-db
           property: connectionString
       - key: FRONTEND_URL
-        value: https://hearingclinicislamabad.com
+        value: https://hearing-clinic.onrender.com

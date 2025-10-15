@@ -31,9 +31,20 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
       'http://127.0.0.1:3000'
     ];
 
-// Force CORS to allow localhost:5173
+// CORS middleware for production and development
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+  const origin = req.headers.origin;
+  
+  if (process.env.NODE_ENV === 'production') {
+    // In production, allow the deployed frontend
+    if (allowedOrigins.includes(origin)) {
+      res.header('Access-Control-Allow-Origin', origin);
+    }
+  } else {
+    // In development, allow localhost origins
+    res.header('Access-Control-Allow-Origin', origin || 'http://localhost:5173');
+  }
+  
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.header('Access-Control-Allow-Credentials', 'true');
