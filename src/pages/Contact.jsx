@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 import API from '../api';
+import APITest from '../components/APITest';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -58,10 +59,15 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="section-padding">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Main Content */}
+          <section className="section-padding">
+            <div className="max-w-7xl mx-auto">
+              {/* API Test Component - Remove this after debugging */}
+              <div className="mb-8">
+                <APITest />
+              </div>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div className="card p-5 shadow-xl">
               <div className="flex items-center mb-4">
