@@ -17,11 +17,30 @@ const __dirname = path.dirname(__filename);
 // =========================
 // Middleware
 // =========================
+// CORS configuration with flexible origin matching
+const allowedOrigins = process.env.NODE_ENV === 'production' 
+  ? [
+      process.env.FRONTEND_URL,
+      process.env.FRONTEND_URL?.replace(/\/$/, ''), // Remove trailing slash
+      process.env.FRONTEND_URL + '/', // Add trailing slash
+    ].filter(Boolean) // Remove undefined values
+  : ['http://localhost:5173', 'http://127.0.0.1:5173'];
+
 app.use(
   cors({
-    origin: process.env.NODE_ENV === 'production' 
-      ? process.env.FRONTEND_URL 
-      : ['http://localhost:5173', 'http://127.0.0.1:5173'],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      // Check if origin is in allowed origins
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      
+      console.log('CORS: Blocked origin:', origin);
+      console.log('CORS: Allowed origins:', allowedOrigins);
+      return callback(new Error('Not allowed by CORS'));
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -48,9 +67,6 @@ const connectWithRetry = async () => {
       minPoolSize: 5,
       maxIdleTimeMS: 30000,
       connectTimeoutMS: 10000,
-      tls: true,
-      tlsAllowInvalidCertificates: false,
-      tlsAllowInvalidHostnames: false,
     });
 
     console.log('✅ Connected to MongoDB');
@@ -276,4 +292,7 @@ app.get('/api/appointments/date/:date', async (req, res) => {
 // =========================
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);
+  console.log(`🌐 Environment: ${process.env.NODE_ENV}`);
+  console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL}`);
+  console.log(`📋 Allowed Origins:`, allowedOrigins);
 });
