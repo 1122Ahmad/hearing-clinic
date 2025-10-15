@@ -23,7 +23,7 @@ const AppointmentPage = () => {
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [bookingForm, setBookingForm] = useState({
     name: '',
     email: '',
@@ -49,8 +49,6 @@ const AppointmentPage = () => {
           } catch (error) {
             console.error('Error fetching booked slots:', error);
             // Don't crash the component, just log the error
-          } finally {
-            setIsLoading(false);
           }
         };
 
@@ -124,20 +122,6 @@ const AppointmentPage = () => {
     setBookingForm({ name: '', email: '', phone: '' });
   };
 
-  // Show loading state while fetching data
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <CalendarIcon className="w-8 h-8 text-blue-800 animate-spin" />
-          </div>
-          <h2 className="text-xl font-semibold text-blue-800 mb-2">Loading Appointment System</h2>
-          <p className="text-gray-600">Please wait while we load available time slots...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
