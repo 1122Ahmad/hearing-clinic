@@ -1,6 +1,6 @@
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -15,6 +15,11 @@ import Audiologist from "./pages/Audiologist";
 
 
 const App = () => {
+  const location = useLocation();
+  
+  // Debug: Log current location
+  console.log('Current location:', location.pathname);
+  
   return (
     <>
       {/* Fixed Navbar */}
