@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import API from '../api';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -26,20 +27,8 @@ const Contact = () => {
     console.log('Submitting form with data:', formData);
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      console.log('Response status:', response.status);
-      console.log('Response headers:', response.headers);
-
-      const result = await response.json();
-      console.log('Response data:', result);
-
+      const result = await API.submitContact(formData);
+      
       if (result.success) {
         setSubmitStatus({ type: 'success', message: result.message });
         setFormData({ name: '', email: '', phone: '', message: '' });

@@ -3,6 +3,7 @@ import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import { motion } from "framer-motion";
 import { Calendar as CalendarIcon, Clock, User, Mail, Phone, CheckCircle, XCircle } from "lucide-react";
+import API from '../api';
 
 const allSlots = [
   "10:00 AM", "10:20 AM", "10:40 AM", "11:00 AM", "11:20 AM", "11:40 AM",
@@ -28,25 +29,24 @@ const AppointmentPage = () => {
     phone: ''
   });
 
-  // Fetch booked slots for the selected date
-  useEffect(() => {
-    const fetchBookedSlots = async () => {
-      try {
-        const dateStr = date.toISOString().split("T")[0];
-        const response = await fetch(`/api/appointments/date/${dateStr}`);
-        const result = await response.json();
-        
-        if (result.success) {
-          const bookedTimes = result.data.map(appointment => appointment.time);
-          setBookedSlots(bookedTimes);
-        }
-      } catch (error) {
-        console.error('Error fetching booked slots:', error);
-      }
-    };
+      // Fetch booked slots for the selected date
+      useEffect(() => {
+        const fetchBookedSlots = async () => {
+          try {
+            const dateStr = date.toISOString().split("T")[0];
+            const result = await API.getAppointmentsByDate(dateStr);
+            
+            if (result.success) {
+              const bookedTimes = result.data.map(appointment => appointment.time);
+              setBookedSlots(bookedTimes);
+            }
+          } catch (error) {
+            console.error('Error fetching booked slots:', error);
+          }
+        };
 
-    fetchBookedSlots();
-  }, [date]);
+        fetchBookedSlots();
+      }, [date]);
 
   // Update available slots when date or booked slots change
   useEffect(() => {
@@ -75,35 +75,26 @@ const AppointmentPage = () => {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
-    try {
-      const dateStr = date.toISOString().split("T")[0];
-      const response = await fetch('/api/appointments', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...bookingForm,
-          date: dateStr,
-          time: selectedSlot
-        }),
-      });
-
-      const result = await response.json();
+        try {
+          const dateStr = date.toISOString().split("T")[0];
+          const result = await API.bookAppointment({
+            ...bookingForm,
+            date: dateStr,
+            time: selectedSlot
+          });
 
       if (result.success) {
         setSubmitStatus({ type: 'success', message: 'Slot booked successfully. Please come 10 minutes before your checkup' });
         setBookingForm({ name: '', email: '', phone: '' });
         setShowBookingForm(false);
         setSelectedSlot(null);
-        // Refresh booked slots
-        const dateStr = date.toISOString().split("T")[0];
-        const response = await fetch(`/api/appointments/date/${dateStr}`);
-        const result = await response.json();
-        if (result.success) {
-          const bookedTimes = result.data.map(appointment => appointment.time);
-          setBookedSlots(bookedTimes);
-        }
+            // Refresh booked slots
+            const dateStr = date.toISOString().split("T")[0];
+            const result = await API.getAppointmentsByDate(dateStr);
+            if (result.success) {
+              const bookedTimes = result.data.map(appointment => appointment.time);
+              setBookedSlots(bookedTimes);
+            }
       } else {
         setSubmitStatus({ type: 'error', message: result.message });
       }
