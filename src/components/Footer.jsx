@@ -98,9 +98,13 @@ const Footer = () => {
                 <Mail className="w-4 h-4 mr-3" />
                 <span className="text-sm sm:text-base">info@hearingclinic.pk</span>
               </div>
-              <div className="flex items-center">
-                <MapPin className="w-4 h-4 mr-3" />
-                <span className="text-sm sm:text-base">Shop no 02 Main PWD Road Near London Baker Opposite Sitara Studio</span>
+              <div className="flex items-start">
+                <MapPin className="w-5 h-5 mr-3 mt-1 flex-shrink-0" />
+                <div className="text-sm sm:text-base leading-relaxed">
+                  <div>Shop no 02 Main PWD Road</div>
+                  <div>Near London Baker</div>
+                  <div>Opposite Sitara Studio</div>
+                </div>
               </div>
             </div>
           </div>

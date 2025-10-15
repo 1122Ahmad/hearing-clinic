@@ -137,7 +137,7 @@ const HearingLoss = () => {
           </motion.div>
 
           <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" 
             variants={containerVariants} 
             initial="hidden" 
             whileInView="visible" 
@@ -148,26 +148,26 @@ const HearingLoss = () => {
               return (
                 <motion.article 
                   key={c.id} 
-                  className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100"
+                  className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 w-full"
                   variants={cardVariant} 
                   whileHover={{ y: -8 }}
                 >
                   {/* Card Header with Clean White Theme */}
-                  <div className="relative p-8 pb-6 bg-gradient-to-br from-gray-50 to-gray-100">
+                  <div className="relative p-4 sm:p-6 lg:p-8 pb-4 sm:pb-6 bg-gradient-to-br from-gray-50 to-gray-100">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-gray-200/30 rounded-full -translate-y-16 translate-x-16 opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
                     
                     <div className="relative z-10">
-                      <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300 border-2 border-gray-200">
-                        <IconComponent className="w-8 h-8 text-gray-700" />
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-white rounded-xl flex items-center justify-center mb-4 sm:mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300 border-2 border-gray-200">
+                        <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-gray-700" />
                       </div>
                       
-                      <h3 className="text-xl font-bold text-gray-900 mb-4 leading-tight min-h-[3rem] flex items-center">{c.title}</h3>
-                      <p className="text-gray-700 leading-relaxed mb-6 min-h-[4.5rem] flex items-start">{c.text}</p>
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight min-h-[2.5rem] sm:min-h-[3rem] flex items-center">{c.title}</h3>
+                      <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4 sm:mb-6 min-h-[3.5rem] sm:min-h-[4.5rem] flex items-start">{c.text}</p>
                     </div>
                   </div>
 
                   {/* Card Body with Features */}
-                  <div className="p-8 pt-6">
+                  <div className="p-4 sm:p-6 lg:p-8 pt-4 sm:pt-6">
                     <div className="bg-gray-50 rounded-xl p-4 mb-6">
                       <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center">
                         <div className="w-2 h-2 bg-gray-600 rounded-full mr-2"></div>
