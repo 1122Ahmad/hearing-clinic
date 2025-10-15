@@ -24,21 +24,21 @@ const Navbar = () => {
 
   return (
     <header className="w-full fixed top-0 left-0 z-50 bg-white shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 py-4">
-        <div className="flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 py-4">
+        <div className="flex items-center justify-between">
           {/* Logo + Clinic Name */}
-          <Link to="/" className="flex items-center">
-            <img src={logo} alt="Logo" className="h-12 w-auto sm:h-14 md:h-16" />
-            <div className="ml-3">
-              <h1 className="text-lg sm:text-xl font-bold text-blue-800">Hearing Clinic Islamabad</h1>
+          <Link to="/" className="flex items-center flex-shrink-0">
+            <img src={logo} alt="Logo" className="h-10 w-auto sm:h-12 md:h-14" />
+            <div className="ml-2 sm:ml-3">
+              <h1 className="text-base sm:text-lg md:text-xl font-bold text-blue-800">Hearing Clinic Islamabad</h1>
               <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">Professional Hearing Care</p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6">
             {/* Navigation Links */}
-            <nav className="flex items-center space-x-8 text-sm font-medium">
+            <nav className="flex items-center space-x-6 text-sm font-medium">
               <Link to="/" className="text-gray-700 hover:text-blue-800 transition py-2 font-semibold">Home</Link>
               <Link to="/hearingLoss" className="text-gray-700 hover:text-blue-800 transition py-2">Hearing Loss</Link>
               

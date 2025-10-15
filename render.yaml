@@ -5,6 +5,9 @@ services:
     plan: free
     buildCommand: npm install && npm run build
     startCommand: npm start
+    customDomains:
+      - hearingclinicislamabad.com
+      - www.hearingclinicislamabad.com
     envVars:
       - key: NODE_ENV
         value: production
@@ -13,4 +16,4 @@ services:
           name: hearing-clinic-db
           property: connectionString
       - key: FRONTEND_URL
-        value: https://hearing-clinic.onrender.com
+        value: https://hearingclinicislamabad.com

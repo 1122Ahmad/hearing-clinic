@@ -26,7 +26,7 @@ const services = [
     description:
       "Professional hearing evaluation using advanced diagnostic equipment to assess your hearing health. Our thorough testing includes pure tone audiometry, speech testing, and tympanometry.",
     icon: hearingAidIcon,
-    features: ["Pure Tone Audiometry", "Speech Testing", "Tympanometry", "Real Ear Measurements"]
+    features: ["Pure Tone Testing", "Speech Testing", "Tympanometry", "Real Ear Testing"]
   },
   {
     label: "Hearing Aid Fittings",
@@ -34,15 +34,15 @@ const services = [
     description:
       "Custom hearing aid selection and fitting tailored to your specific needs and lifestyle. We use real-ear measurements and advanced programming to ensure optimal performance.",
     icon: repairIcon,
-    features: ["Custom Selection", "Real Ear Measurements", "Advanced Programming", "Lifestyle Matching"]
+    features: ["Custom Selection", "Real Ear Testing", "Advanced Setup", "Lifestyle Matching"]
   },
   {
     label: "Hearing Aid Repair",
     title: "Professional Hearing Aid Repair",
     description:
-      "Expert repair and maintenance services to keep your hearing aids working at peak performance. From routine cleaning to component replacement, we ensure your devices provide consistent, clear hearing.",
+      "Expert repair and maintenance services to keep your hearing aids working at peak performance. From routine cleaning to component replacement, we ensure consistent, clear sound.",
     icon: aidIcon,
-    features: ["Expert Repairs", "Routine Maintenance", "Component Replacement", "Performance Optimization"]
+    features: ["Expert Repairs", "Routine Care", "Component Repair", "Performance Tuning"]
   },
   {
     label: "Tinnitus Relief",
@@ -50,7 +50,7 @@ const services = [
     description:
       "Comprehensive tinnitus treatment program combining sound therapy, counseling, and stress management techniques. Our personalized approach helps reduce the impact of tinnitus on your daily life.",
     icon: tinnitusIcon,
-    features: ["Sound Therapy", "Counseling", "Stress Management", "Personalized Treatment"]
+    features: ["Sound Therapy", "Counseling", "Stress Management", "Personalized Care"]
   },
   {
     label: "Hearing Protection",
@@ -66,7 +66,7 @@ const services = [
     description:
       "Professional earwax removal using gentle, medically-approved techniques including microsuction and irrigation. Our safe procedures restore clear hearing and prevent complications from impacted earwax.",
     icon: earwaxIcon,
-    features: ["Microsuction", "Gentle Irrigation", "Safe Procedures", "Complication Prevention"]
+    features: ["Microsuction", "Gentle Irrigation", "Safe Procedures", "Prevention Care"]
   },
 ];
 
@@ -497,11 +497,11 @@ const Home = () => {
 
       {/* Audiologist Section */}
       <section
-        className="section-padding bg-cover bg-center bg-no-repeat relative overflow-hidden"
+        className="section-padding bg-cover bg-center bg-no-repeat relative overflow-hidden min-h-[70vh] sm:min-h-[80vh] bg-top sm:bg-center"
         style={{ 
           backgroundImage: `url(${audiologistBg})`,
-          backgroundPosition: 'center center',
-          minHeight: '80vh'
+          backgroundSize: 'cover',
+          backgroundAttachment: 'scroll'
         }}
       >
         {/* Professional Overlay System */}
@@ -523,7 +523,7 @@ const Home = () => {
         </div>
         
         <div className="max-w-7xl mx-auto relative z-10 px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[80vh] py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[70vh] sm:min-h-[80vh] py-8 sm:py-12">
             {/* Left side - Content */}
             <div className="text-left lg:text-left">
               <motion.div

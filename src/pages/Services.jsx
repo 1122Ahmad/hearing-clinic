@@ -22,7 +22,7 @@ const services = [
     icon: deafnessIcon,
     bgImage: testingBg,
     route: "/services/hearing-testing",
-    features: ["Pure Tone Audiometry", "Speech Testing", "Tympanometry", "Real Ear Measurements"],
+    features: ["Pure Tone Testing", "Speech Testing", "Tympanometry", "Real Ear Testing"],
     iconComponent: Stethoscope
   },
   {
@@ -33,18 +33,18 @@ const services = [
     icon: aidIcon,
     bgImage: fittingBg,
     route: "/services/fittingBg",
-    features: ["Custom Selection", "Real Ear Measurements", "Advanced Programming", "Lifestyle Matching"],
+    features: ["Custom Selection", "Real Ear Testing", "Advanced Setup", "Lifestyle Matching"],
     iconComponent: Headphones
   },
   {
     label: "Hearing Aid Repair",
     title: "Professional Hearing Aid Repair",
     description:
-      "Expert repair and maintenance services to keep your hearing aids working at peak performance. From routine cleaning to component replacement, we ensure consistent, clear hearing.",
+      "Expert repair and maintenance services to keep your hearing aids working at peak performance. From routine cleaning to component replacement, we ensure consistent, clear sound.",
     icon: repairIcon,
     bgImage: repairBg,
     route: "/services/hearing-aid-repair",
-    features: ["Expert Repairs", "Routine Maintenance", "Component Replacement", "Performance Optimization"],
+    features: ["Expert Repairs", "Routine Care", "Component Repair", "Performance Tuning"],
     iconComponent: Wrench
   },
   {
@@ -55,7 +55,7 @@ const services = [
     icon: tinnitusIcon,
     bgImage: tinnitusBg,
     route: "/services/tinnitus-relief",
-    features: ["Sound Therapy", "Counseling", "Stress Management", "Personalized Treatment"],
+    features: ["Sound Therapy", "Counseling", "Stress Management", "Personalized Care"],
     iconComponent: Volume2
   },
   {
@@ -77,7 +77,7 @@ const services = [
     icon: waxIcon,
     bgImage: waxBg,
     route: "/services/earwax-management",
-    features: ["Microsuction", "Gentle Irrigation", "Safe Procedures", "Complication Prevention"],
+    features: ["Microsuction", "Gentle Irrigation", "Safe Procedures", "Prevention Care"],
     iconComponent: Heart
   },
 ];
