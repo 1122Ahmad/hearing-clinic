@@ -17,6 +17,11 @@ const Navbar = () => {
     };
   }, [dropdownTimeout]);
 
+  // Function to close mobile menu
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <header className="w-full fixed top-0 left-0 z-50 bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 py-4">
@@ -106,13 +111,13 @@ const Navbar = () => {
                   <Phone className="w-4 h-4" />
                   Call Us
                 </a>
-                <a
-                  href="/appointment"
+                <Link
+                  to="/appointment"
                   className="btn-primary text-sm px-4 py-2 flex items-center gap-2"
                 >
                   <Calendar className="w-4 h-4" />
                   Book Appointment
-                </a>
+                </Link>
               </div>
             </nav>
           </div>
@@ -130,31 +135,31 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden mt-4 pb-4 border-t border-gray-200">
             <nav className="flex flex-col space-y-4 pt-4">
-              <Link to="/" className="text-gray-700 hover:text-blue-800 transition py-2 font-semibold">Home</Link>
-              <Link to="/hearingLoss" className="text-gray-700 hover:text-blue-800 transition py-2">Hearing Loss</Link>
+              <Link to="/" onClick={closeMobileMenu} className="text-gray-700 hover:text-blue-800 transition py-2 font-semibold">Home</Link>
+              <Link to="/hearingLoss" onClick={closeMobileMenu} className="text-gray-700 hover:text-blue-800 transition py-2">Hearing Loss</Link>
               
               {/* Mobile Hearing Aids Dropdown */}
               <div className="space-y-2">
                 <div className="text-gray-700 font-medium py-2">Hearing Aids</div>
                 <div className="ml-4 space-y-2">
-                  <Link to="/hearing-aids/faq" className="block text-gray-600 hover:text-blue-800 transition py-1">
+                  <Link to="/hearing-aids/faq" onClick={closeMobileMenu} className="block text-gray-600 hover:text-blue-800 transition py-1">
                     Hearing Aids FAQ
                   </Link>
-                  <Link to="/hearing-aids" className="block text-gray-600 hover:text-blue-800 transition py-1">
+                  <Link to="/hearing-aids" onClick={closeMobileMenu} className="block text-gray-600 hover:text-blue-800 transition py-1">
                     Best Hearing Aids
                   </Link>
-                  <Link to="/hearing-aids/brands" className="block text-gray-600 hover:text-blue-800 transition py-1">
+                  <Link to="/hearing-aids/brands" onClick={closeMobileMenu} className="block text-gray-600 hover:text-blue-800 transition py-1">
                     Hearing Aid Brands
                   </Link>
-                  <Link to="/hearing-aids/otc" className="block text-gray-600 hover:text-blue-800 transition py-1">
+                  <Link to="/hearing-aids/otc" onClick={closeMobileMenu} className="block text-gray-600 hover:text-blue-800 transition py-1">
                     Over-the-Counter Hearing Aids
                   </Link>
                 </div>
               </div>
 
-              <Link to="/services" className="text-gray-700 hover:text-blue-800 transition py-2">Services</Link>
-              <Link to="/about" className="text-gray-700 hover:text-blue-800 transition py-2">About Us</Link>
-              <Link to="/contact" className="text-gray-700 hover:text-blue-800 transition py-2">Contact Us</Link>
+              <Link to="/services" onClick={closeMobileMenu} className="text-gray-700 hover:text-blue-800 transition py-2">Services</Link>
+              <Link to="/about" onClick={closeMobileMenu} className="text-gray-700 hover:text-blue-800 transition py-2">About Us</Link>
+              <Link to="/contact" onClick={closeMobileMenu} className="text-gray-700 hover:text-blue-800 transition py-2">Contact Us</Link>
             </nav>
 
             {/* Mobile Action Buttons */}
@@ -162,18 +167,20 @@ const Navbar = () => {
               <div className="flex flex-col space-y-2">
                 <a
                   href="tel:+923001234567"
+                  onClick={closeMobileMenu}
                   className="btn-accent text-sm px-4 py-3 flex items-center justify-center gap-2"
                 >
                   <Phone className="w-4 h-4" />
                   Call Us
                 </a>
-                <a
-                  href="/appointment"
+                <Link
+                  to="/appointment"
+                  onClick={closeMobileMenu}
                   className="btn-primary text-sm px-4 py-3 flex items-center justify-center gap-2"
                 >
                   <Calendar className="w-4 h-4" />
                   Book Appointment
-                </a>
+                </Link>
               </div>
             </div>
           </div>
