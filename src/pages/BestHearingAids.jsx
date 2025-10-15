@@ -207,7 +207,7 @@ const BestHearingAids = () => {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16" data-aos="fade-up">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4">
+            <h2 className="block overflow-visible py-2 text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4">
               Types of Hearing Aids
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">

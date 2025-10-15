@@ -201,13 +201,23 @@ const OTCHearingAids = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-24 px-4 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
+     <section
+      className="relative py-12 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden w-screen max-w-[100vw] -mx-[calc(50vw-50%)]"
+      style={{
+        left: "50%",
+        right: "50%",
+        marginLeft: "-50vw",
+        marginRight: "-50vw",
+        width: "100vw",
+        position: "relative",
+      }}
+    >
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
         </div>
 
-        <div className="relative max-w-4xl mx-auto text-center" data-aos="zoom-in">
+        <div className="relative w-full max-w-4xl mx-auto px-4 text-center" data-aos="zoom-in">
           <div className="inline-flex items-center justify-center w-24 h-24 bg-white/20 backdrop-blur-sm rounded-3xl mb-8 shadow-2xl">
             <CheckCircle className="w-12 h-12 text-white" />
           </div>
@@ -240,7 +250,7 @@ const OTCHearingAids = () => {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16" data-aos="fade-up">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4">
+            <h2 className="block overflow-visible py-2 text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4">
               Why Professional Hearing Care Matters
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
