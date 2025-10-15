@@ -159,14 +159,6 @@ const Services = () => {
                         ))}
                       </div>
                     </div>
-                    
-                    <a 
-                      href="/appointment" 
-                      className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:shadow-xl group-hover:scale-105"
-                    >
-                      <span>Book This Service</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                    </a>
                   </div>
 
                   {/* Hover Effect Border */}
