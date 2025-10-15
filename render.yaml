@@ -1,0 +1,27 @@
+services:
+  # Backend Service
+  - type: web
+    name: hearing-clinic-backend
+    env: node
+    plan: free
+    buildCommand: cd . && npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false
+    healthCheckPath: /
+    
+  # Frontend Service  
+  - type: web
+    name: hearing-clinic-frontend
+    env: static
+    plan: free
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://hearing-clinic-backend.onrender.com
