@@ -1,5 +1,5 @@
 // API Configuration for Frontend
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 // Create API instance with base configuration
 const API = {
@@ -32,35 +32,35 @@ const API = {
 
   // Contact API methods
   async submitContact(contactData) {
-    return this.request('/contact', {
+    return this.request('/api/contact', {
       method: 'POST',
       body: JSON.stringify(contactData),
     });
   },
 
   async getContacts() {
-    return this.request('/contacts');
+    return this.request('/api/contacts');
   },
 
   // Appointment API methods
   async bookAppointment(appointmentData) {
-    return this.request('/appointments', {
+    return this.request('/api/appointments', {
       method: 'POST',
       body: JSON.stringify(appointmentData),
     });
   },
 
   async getAppointments() {
-    return this.request('/appointments');
+    return this.request('/api/appointments');
   },
 
   async getAppointmentsByDate(date) {
-    return this.request(`/appointments/date/${date}`);
+    return this.request(`/api/appointments/date/${date}`);
   },
 
   // Health check
   async healthCheck() {
-    return this.request('/health');
+    return this.request('/api/health');
   },
 };
 
