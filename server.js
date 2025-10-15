@@ -2,24 +2,35 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Get __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // =========================
 // Middleware
 // =========================
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], // Allow frontend
+    origin: process.env.NODE_ENV === 'production' 
+      ? process.env.FRONTEND_URL 
+      : ['http://localhost:5173', 'http://127.0.0.1:5173'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
 app.use(express.json());
+
+// Note: Static file serving removed for separate deployment
+// Frontend is now served by Render Static Site service
 
 // =========================
 // MongoDB Connection
@@ -94,10 +105,13 @@ const Appointment = mongoose.model('Appointment', appointmentSchema);
 // Routes
 // =========================
 
-// Root route
-app.get('/', (req, res) => {
+// API Health check route
+app.get('/api/health', (req, res) => {
   res.json({ message: 'Hearing Clinic API Server is running!' });
 });
+
+// Note: Catch-all route removed for separate deployment
+// Frontend routing is now handled by Render Static Site service
 
 // --------------------
 // Contact Routes

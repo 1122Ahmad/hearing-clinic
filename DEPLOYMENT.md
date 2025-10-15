@@ -1,185 +1,143 @@
-# 🚀 Deployment Guide - Hearing Clinic Website
+# 🚀 Two-Service Deployment Guide for Hearing Clinic Website
 
-## Overview
-This project contains both frontend (React + Vite) and backend (Node.js + Express) in the same repository. We'll deploy them as **two separate services** on Render.
+## Deploying to Render (Separate Frontend & Backend)
 
-## 📋 Prerequisites
+This guide deploys your app as **two separate services** on Render:
+- **Frontend**: Static Site (React app)
+- **Backend**: Web Service (Express API)
+
+### Prerequisites
 - GitHub repository with your code
-- Render account (free tier available)
-- MongoDB Atlas database
+- MongoDB Atlas account (for database)
+- Render account
 
-## 🔧 Step 1: Prepare Your Repository
+### Step 1: Prepare Your Repository
+1. Make sure all your code is committed and pushed to GitHub
+2. Ensure your `package.json` has the correct scripts:
+   - `"start": "node server.js"`
+   - `"build": "vite build"`
 
-### 1.1 Environment Variables
-Create a `.env` file in your project root:
-```env
-MONGODB_URI=your_mongodb_atlas_connection_string
-NODE_ENV=production
-PORT=10000
-```
+### Step 2: Set Up MongoDB Atlas
+1. Go to [MongoDB Atlas](https://www.mongodb.com/atlas)
+2. Create a new cluster (free tier is fine)
+3. Create a database user
+4. Get your connection string
+5. Whitelist all IP addresses (0.0.0.0/0) for Render
 
-### 1.2 Update API URLs
-Update your frontend to use the backend URL in production. In your React components, replace:
-```javascript
-// Development
-const API_URL = 'http://localhost:5000';
+### Step 3: Deploy BACKEND as Web Service
 
-// Production
-const API_URL = 'https://hearing-clinic-backend.onrender.com';
-```
-
-## 🌐 Step 2: Deploy Backend Service
-
-### 2.1 Create Backend Service on Render
 1. Go to [Render Dashboard](https://dashboard.render.com)
-2. Click **"New +"** → **"Web Service"**
+2. Click "New +" → "Web Service"
 3. Connect your GitHub repository
 4. Configure the service:
+   - **Name**: `hearing-clinic-backend` (or your preferred name)
+   - **Environment**: Node
+   - **Root Directory**: Leave blank (uses root)
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+   - **Plan**: Free
 
-**Service Settings:**
-- **Name**: `hearing-clinic-backend`
-- **Environment**: `Node`
-- **Build Command**: `npm install`
-- **Start Command**: `node server.js`
-- **Plan**: Free
+5. **Environment Variables** (Backend):
+   - `NODE_ENV` = `production`
+   - `MONGODB_URI` = `your-mongodb-connection-string`
+   - `FRONTEND_URL` = `https://your-frontend-name.onrender.com` (you'll get this after deploying frontend)
 
-**Environment Variables:**
+6. Deploy and note the backend URL: `https://your-backend-name.onrender.com`
+
+### Step 4: Deploy FRONTEND as Static Site
+
+1. Go to [Render Dashboard](https://dashboard.render.com)
+2. Click "New +" → "Static Site"
+3. Connect your GitHub repository
+4. Configure the service:
+   - **Name**: `hearing-clinic-frontend` (or your preferred name)
+   - **Root Directory**: Leave blank (uses root)
+   - **Build Command**: `npm install && npm run build`
+   - **Publish Directory**: `dist`
+   - **Plan**: Free
+
+5. **Environment Variables** (Frontend):
+   - `VITE_API_URL` = `https://your-backend-name.onrender.com/api`
+
+6. Deploy and note the frontend URL: `https://your-frontend-name.onrender.com`
+
+### Step 5: Update Backend CORS
+
+After both services are deployed, update the backend environment variable:
+- Go to your backend service in Render
+- Update `FRONTEND_URL` to your actual frontend URL
+- Redeploy the backend service
+
+## How It Works
+
+### Production Setup
+- **Frontend**: React app built with Vite, served by Render's CDN
+- **Backend**: Express API server running on Render
+- **Database**: MongoDB Atlas for data storage
+- **Communication**: Frontend makes API calls to backend URL
+
+### File Structure
+```
+/
+├── src/
+│   ├── components/     # React components
+│   ├── pages/         # React pages
+│   ├── api.js         # API configuration
+│   └── ...
+├── server.js          # Express backend server
+├── package.json       # Dependencies and scripts
+└── dist/             # Built React app (created during build)
+```
+
+### API Configuration
+The frontend uses `src/api.js` to communicate with the backend:
+```javascript
+// Uses VITE_API_URL environment variable
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+```
+
+### API Endpoints
+- `GET /api/health` - Health check
+- `POST /api/contact` - Contact form submission
+- `GET /api/contacts` - Get all contacts
+- `POST /api/appointments` - Book appointment
+- `GET /api/appointments` - Get all appointments
+- `GET /api/appointments/date/:date` - Get appointments for specific date
+
+### Environment Variables Summary
+
+#### Backend Service:
 - `NODE_ENV` = `production`
-- `MONGODB_URI` = `your_mongodb_atlas_connection_string`
-- `PORT` = `10000`
+- `MONGODB_URI` = `your-mongodb-connection-string`
+- `FRONTEND_URL` = `https://your-frontend-name.onrender.com`
 
-### 2.2 Deploy Backend
-1. Click **"Create Web Service"**
-2. Wait for deployment to complete
-3. Note the backend URL (e.g., `https://hearing-clinic-backend.onrender.com`)
+#### Frontend Service:
+- `VITE_API_URL` = `https://your-backend-name.onrender.com/api`
 
-## 🎨 Step 3: Deploy Frontend Service
+### Troubleshooting
 
-### 3.1 Create Frontend Service on Render
-1. Go to [Render Dashboard](https://dashboard.render.com)
-2. Click **"New +"** → **"Static Site"
-3. Connect your GitHub repository
-4. Configure the service:
+#### Backend Issues
+- Check MongoDB connection string
+- Verify CORS settings match frontend URL
+- Check server logs for errors
 
-**Service Settings:**
-- **Name**: `hearing-clinic-frontend`
-- **Build Command**: `npm install && npm run build`
-- **Publish Directory**: `dist`
-- **Plan**: Free
+#### Frontend Issues
+- Verify `VITE_API_URL` environment variable
+- Check browser console for API errors
+- Ensure backend is running and accessible
 
-**Environment Variables:**
-- `VITE_API_URL` = `https://hearing-clinic-backend.onrender.com`
+#### CORS Issues
+- Make sure `FRONTEND_URL` in backend matches your actual frontend URL
+- Check that backend allows the frontend origin
 
-### 3.2 Deploy Frontend
-1. Click **"Create Static Site"**
-2. Wait for deployment to complete
-3. Note the frontend URL (e.g., `https://hearing-clinic-frontend.onrender.com`)
+### Performance Tips
+- Use MongoDB Atlas free tier (512MB storage)
+- Render free tier has limitations (sleeps after 15 minutes of inactivity)
+- Static site has better performance than web service for frontend
+- Consider upgrading to paid plans for production use
 
-## 🔗 Step 4: Update CORS Settings
-
-Update your backend `server.js` to allow your frontend domain:
-
-```javascript
-app.use(cors({
-  origin: [
-    'http://localhost:5173', 
-    'http://127.0.0.1:5173',
-    'https://hearing-clinic-frontend.onrender.com' // Add your frontend URL
-  ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
-```
-
-## 🎯 Step 5: Alternative - Single Service Deployment
-
-If you prefer to deploy as a single service, you can use the `render.yaml` file:
-
-1. Push the `render.yaml` file to your repository
-2. Connect your repository to Render
-3. Render will automatically detect and deploy both services
-
-## 📱 Step 6: Custom Domain (Optional)
-
-### 6.1 Add Custom Domain
-1. Go to your service settings
-2. Click **"Custom Domains"**
-3. Add your domain (e.g., `hearingclinic.com`)
-4. Update DNS records as instructed
-
-### 6.2 SSL Certificate
-Render automatically provides SSL certificates for custom domains.
-
-## 🔍 Step 7: Monitoring & Logs
-
-### 7.1 View Logs
-- Go to your service dashboard
-- Click **"Logs"** tab
-- Monitor for any errors
-
-### 7.2 Health Checks
-- Backend: `https://your-backend-url.onrender.com/`
-- Frontend: `https://your-frontend-url.onrender.com/`
-
-## 🚨 Troubleshooting
-
-### Common Issues:
-
-1. **Build Failures**
-   - Check build logs in Render dashboard
-   - Ensure all dependencies are in `package.json`
-
-2. **CORS Errors**
-   - Update CORS settings in `server.js`
-   - Add frontend URL to allowed origins
-
-3. **Database Connection Issues**
-   - Verify MongoDB Atlas connection string
-   - Check network access settings in MongoDB Atlas
-
-4. **Environment Variables**
-   - Ensure all required variables are set
-   - Check variable names match exactly
-
-## 📊 Performance Tips
-
-1. **Enable Caching**
-   - Static assets are cached automatically
-   - API responses can be cached with appropriate headers
-
-2. **Database Optimization**
-   - Use MongoDB indexes for better performance
-   - Consider connection pooling
-
-3. **Frontend Optimization**
-   - Enable gzip compression
-   - Optimize images and assets
-
-## 🔄 Updates & Maintenance
-
-### Deploying Updates:
-1. Push changes to your GitHub repository
-2. Render automatically redeploys both services
-3. Monitor deployment logs for any issues
-
-### Rollback:
-1. Go to service dashboard
-2. Click **"Manual Deploy"**
-3. Select previous successful deployment
-
-## 📞 Support
-
-- **Render Documentation**: https://render.com/docs
-- **MongoDB Atlas**: https://docs.atlas.mongodb.com
-- **React Deployment**: https://create-react-app.dev/docs/deployment
-
----
-
-## 🎉 Success!
-
-Your Hearing Clinic website should now be live at:
-- **Frontend**: `https://hearing-clinic-frontend.onrender.com`
-- **Backend**: `https://hearing-clinic-backend.onrender.com`
-
-Both services will automatically redeploy when you push changes to your GitHub repository!
+### Security Notes
+- Environment variables are secure in Render
+- CORS is configured for production
+- Database credentials are not exposed in code
+- API communication is over HTTPS
