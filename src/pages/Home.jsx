@@ -789,13 +789,13 @@ const Home = () => {
               ].map((brand, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 mx-8 flex items-center justify-center"
+                  className="flex-shrink-0 mx-1 sm:mx-8 flex items-center justify-center"
                 >
-                  <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group">
+                  <div className="bg-white rounded-2xl p-2 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group">
                     <img
                       src={brand.image}
                       alt={brand.name}
-                      className="h-16 w-24 object-contain transition-all duration-300"
+                      className="h-10 w-12 sm:h-16 sm:w-24 object-contain transition-all duration-300"
                     />
                   </div>
                 </div>
@@ -813,13 +813,13 @@ const Home = () => {
               ].map((brand, index) => (
                 <div
                   key={`duplicate-${index}`}
-                  className="flex-shrink-0 mx-8 flex items-center justify-center"
+                  className="flex-shrink-0 mx-1 sm:mx-8 flex items-center justify-center"
                 >
-                  <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group">
+                  <div className="bg-white rounded-2xl p-2 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group">
                     <img
                       src={brand.image}
                       alt={brand.name}
-                      className="h-16 w-24 object-contain transition-all duration-300"
+                      className="h-10 w-12 sm:h-16 sm:w-24 object-contain transition-all duration-300"
                     />
                   </div>
                 </div>
@@ -846,7 +846,7 @@ const styles = `
   }
   
   .animate-scroll {
-    animation: scroll 30s linear infinite;
+    animation: scroll 8s linear infinite;
   }
   
   .animate-scroll:hover {
