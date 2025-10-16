@@ -751,10 +751,114 @@ const Home = () => {
           </motion.div>
   </div>
 </section>
+
+      {/* Trusted Brands Section */}
+      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+              Trusted by Leading Brands
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              We work with the world's most reputable hearing aid manufacturers to bring you the best solutions
+            </p>
+          </motion.div>
+
+          {/* Brand Carousel */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative overflow-hidden"
+          >
+            <div className="flex animate-scroll">
+              {[
+                { name: "Widex", image: "/images/Widex.jpg" },
+                { name: "Starkey", image: "/images/Starkey.jpg" },
+                { name: "Unitron", image: "/images/Unitron.jpg" },
+                { name: "Signia", image: "/images/Signia.jpg" },
+                { name: "Oticon", image: "/images/Oticon.jpg" },
+                { name: "ReSound", image: "/images/ReSound.jpg" },
+                { name: "Rexton", image: "/images/Rexton.jpg" },
+                { name: "Phonak", image: "/images/Phonak.jpg" },
+              ].map((brand, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 mx-8 flex items-center justify-center"
+                >
+                  <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group">
+                    <img
+                      src={brand.image}
+                      alt={brand.name}
+                      className="h-16 w-24 object-contain transition-all duration-300"
+                    />
+                  </div>
+                </div>
+              ))}
+              {/* Duplicate for seamless loop */}
+              {[
+                { name: "Widex", image: "/images/Widex.jpg" },
+                { name: "Starkey", image: "/images/Starkey.jpg" },
+                { name: "Unitron", image: "/images/Unitron.jpg" },
+                { name: "Signia", image: "/images/Signia.jpg" },
+                { name: "Oticon", image: "/images/Oticon.jpg" },
+                { name: "ReSound", image: "/images/ReSound.jpg" },
+                { name: "Rexton", image: "/images/Rexton.jpg" },
+                { name: "Phonak", image: "/images/Phonak.jpg" },
+              ].map((brand, index) => (
+                <div
+                  key={`duplicate-${index}`}
+                  className="flex-shrink-0 mx-8 flex items-center justify-center"
+                >
+                  <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group">
+                    <img
+                      src={brand.image}
+                      alt={brand.name}
+                      className="h-16 w-24 object-contain transition-all duration-300"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 };
 
 export default Home;
+
+// Add CSS for the scrolling animation
+const styles = `
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-scroll {
+    animation: scroll 30s linear infinite;
+  }
+  
+  .animate-scroll:hover {
+    animation-play-state: paused;
+  }
+`;
+
+// Inject styles
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement('style');
+  styleSheet.textContent = styles;
+  document.head.appendChild(styleSheet);
+}
 
 

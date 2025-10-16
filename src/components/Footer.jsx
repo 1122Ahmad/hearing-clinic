@@ -1,4 +1,4 @@
-import { Home, Wrench, Info, Ear, Phone, Mail, MapPin, Calendar, Instagram, Facebook } from "lucide-react";
+import { Home, Wrench, Info, Ear, Phone, Mail, MapPin, Calendar, Instagram, Facebook, PhoneCall } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -92,11 +92,30 @@ const Footer = () => {
             <div className="space-y-3 text-blue-100">
               <div className="flex items-center">
                 <Phone className="w-4 h-4 mr-3" />
-                <span className="text-sm sm:text-base">+92 300 123 4567</span>
+                <a 
+                  href="tel:+923001232863" 
+                  className="text-sm sm:text-base hover:text-white transition-colors"
+                >
+                  +92 300 123 2863
+                </a>
+              </div>
+              <div className="flex items-center">
+                <PhoneCall className="w-4 h-4 mr-3" />
+                <a 
+                  href="tel:+92515975059" 
+                  className="text-sm sm:text-base hover:text-white transition-colors"
+                >
+                  0515975059
+                </a>
               </div>
               <div className="flex items-center">
                 <Mail className="w-4 h-4 mr-3" />
-                <span className="text-sm sm:text-base">info@hearingclinic.pk</span>
+                <a 
+                  href="mailto:info@hearingclinicislamabad.com" 
+                  className="text-sm sm:text-base hover:text-white transition-colors"
+                >
+                  info@hearingclinicislamabad.com
+                </a>
               </div>
               <div className="flex items-start">
                 <MapPin className="w-5 h-5 mr-3 mt-1 flex-shrink-0" />
