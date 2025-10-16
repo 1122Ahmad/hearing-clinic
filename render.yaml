@@ -5,9 +5,6 @@ services:
     plan: free
     buildCommand: npm install && npm run build
     startCommand: npm start
-    customDomains:
-      - hearingclinicislamabad.com
-      - www.hearingclinicislamabad.com
     envVars:
       - key: NODE_ENV
         value: production
