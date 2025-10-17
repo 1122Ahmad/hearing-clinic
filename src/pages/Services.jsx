@@ -12,6 +12,9 @@ import waxBg from "../assets/earwax-bg.png";
 import waxIcon from "../assets/earwax.png";
 import hpBg from "../assets/hearProtection-bg.png";
 import hpIcon from "../assets/headphones.png";
+import hearingAidIcon from "../assets/headphones.png";
+import protectionIcon from "../assets/deafness.png";
+import earwaxIcon from "../assets/earwax.png";
 
 const services = [
   {
@@ -19,7 +22,7 @@ const services = [
     title: "Comprehensive Hearing Testing",
     description:
       "Professional hearing evaluation using advanced diagnostic equipment to assess your hearing health. Our thorough testing includes pure tone audiometry, speech testing, and tympanometry.",
-    icon: deafnessIcon,
+    icon: hearingAidIcon,
     bgImage: testingBg,
     route: "/services/hearing-testing",
     features: ["Pure Tone Testing", "Speech Testing", "Tympanometry", "Real Ear Testing"],
@@ -30,7 +33,7 @@ const services = [
     title: "Personalized Hearing Aid Fittings",
     description:
       "Custom hearing aid selection and fitting tailored to your specific needs and lifestyle. We use real-ear measurements and advanced programming to ensure optimal performance.",
-    icon: aidIcon,
+    icon: repairIcon,
     bgImage: fittingBg,
     route: "/services/fittingBg",
     features: ["Custom Selection", "Real Ear Testing", "Advanced Setup", "Lifestyle Matching"],
@@ -41,7 +44,7 @@ const services = [
     title: "Professional Hearing Aid Repair",
     description:
       "Expert repair and maintenance services to keep your hearing aids working at peak performance. From routine cleaning to component replacement, we ensure consistent, clear sound.",
-    icon: repairIcon,
+    icon: aidIcon,
     bgImage: repairBg,
     route: "/services/hearing-aid-repair",
     features: ["Expert Repairs", "Routine Care", "Component Repair", "Performance Tuning"],
@@ -63,7 +66,7 @@ const services = [
     title: "Custom Hearing Protection",
     description:
       "Specialized hearing protection solutions for noisy environments, including custom-fitted earplugs for musicians, industrial workers, and recreational activities. Protect your hearing while maintaining sound clarity.",
-    icon: hpIcon,
+    icon: protectionIcon,
     bgImage: hpBg,
     route: "/services/hearing-protection",
     features: ["Custom Fitted", "Musician Protection", "Industrial Solutions", "Recreational Use"],
@@ -74,7 +77,7 @@ const services = [
     title: "Safe Earwax Removal",
     description:
       "Professional earwax removal using gentle, medically-approved techniques including microsuction and irrigation. Our safe procedures restore clear hearing and prevent complications from impacted earwax.",
-    icon: waxIcon,
+    icon: earwaxIcon,
     bgImage: waxBg,
     route: "/services/earwax-management",
     features: ["Microsuction", "Gentle Irrigation", "Safe Procedures", "Prevention Care"],
@@ -135,7 +138,11 @@ const Services = () => {
                     
                     <div className="relative z-10">
                       <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-6 shadow-lg group-hover:shadow-xl transition-all duration-300">
-                        <IconComponent className="w-8 h-8 text-white" />
+                        <img
+                          src={service.icon}
+                          alt={service.label}
+                          className="w-10 h-10 object-contain"
+                        />
                       </div>
                       
                       <h3 className="text-xl font-bold text-white mb-4 leading-tight min-h-[3rem] flex items-center">{service.title}</h3>
