@@ -6,8 +6,8 @@ import heroImage from "../assets/heroHearing.png";
 
 // Blog images
 import blog1 from "../assets/blog1.png";
-import blog2 from "../assets/blog3.png";
-import blog3 from "../assets/blog2.png";
+import blog2 from "../assets/blog2.jpg";
+import blog3 from "../assets/blog3.png";
 import blog4 from "../assets/blog4.png";
 
 const cards = [
@@ -236,10 +236,10 @@ const HearingLoss = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {[
-              {id:1,title:"New Research Aims to Prevent Acquired Hearing Loss",text:"Scientists are exploring how everyday noise, aging, and genetics contribute to hearing loss and developing new strategies to protect the ear before damage occurs.",image:blog1},
-              {id:2,title:"Can Tinnitus Affect Memory and Focus?",text:"Tinnitus doesn't just cause ringing. Studies suggest it may also impact sleep, concentration, and even memory, making early treatment more important than ever.",image:blog2},
-              {id:3,title:"Social Isolation: The Hidden Challenge of Hearing Loss",text:"Hearing loss can make conversations exhausting, leading many people to withdraw from social situations. Researchers stress the importance of connection and support.",image:blog3},
-              {id:4,title:"Balance and Hearing: Surprising Link Discovered",text:"New findings show that inner ear health affects balance and posture. Experts recommend regular hearing checkups to reduce fall risk and improve stability.",image:blog4}
+              {id:1,title:"New Research Aims to Prevent Acquired Hearing Loss",text:"Scientists are exploring how everyday noise, aging, and genetics contribute to hearing loss and developing new strategies to protect the ear before damage occurs.",image:blog1,link:"/blog/prevent-hearing-loss"},
+              {id:2,title:"Can Tinnitus Affect Memory and Focus?",text:"Tinnitus doesn't just cause ringing. Studies suggest it may also impact sleep, concentration, and even memory, making early treatment more important than ever.",image:blog3,link:"/blog/tinnitus-memory"},
+              {id:3,title:"Social Isolation: The Hidden Challenge of Hearing Loss",text:"Hearing loss can make conversations exhausting, leading many people to withdraw from social situations. Researchers stress the importance of connection and support.",image:blog2,link:"/blog/social-isolation"},
+              {id:4,title:"Balance and Hearing: Surprising Link Discovered",text:"New findings show that inner ear health affects balance and posture. Experts recommend regular hearing checkups to reduce fall risk and improve stability.",image:blog4,link:"/blog/balance-hearing"}
             ].map((item) => (
               <motion.div 
                 key={item.id} 
@@ -251,9 +251,15 @@ const HearingLoss = () => {
                 whileHover={{ y: -8 }}
               >
                 {/* Image */}
-                <div className="w-full h-48 relative overflow-hidden">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                <div className="w-full h-56 relative overflow-hidden">
+                  <img 
+                    src={item.image} 
+                    alt={item.title} 
+                    className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ${
+                      item.id <= 2 ? 'object-center' : 'object-top'
+                    }`}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                 </div>
                 
                 {/* Text */}
@@ -262,7 +268,7 @@ const HearingLoss = () => {
                   <p className="text-body mb-6">{item.text}</p>
                   
                   <a 
-                    href="/appointment" 
+                    href={item.link} 
                     className="inline-flex items-center text-gray-700 hover:text-gray-900 font-semibold transition-colors duration-300 group-hover:gap-3 gap-2"
                   >
                     <span>Read More</span>

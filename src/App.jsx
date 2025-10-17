@@ -13,6 +13,10 @@ import BestHearingAids from "./pages/BestHearingAids";
 import HearingAidBrands from "./pages/HearingAidBrands";
 import OTCHearingAids from "./pages/OTCHearingAids";
 import Audiologist from "./pages/Audiologist";
+import BlogSocialIsolation from "./pages/BlogSocialIsolation";
+import BlogBalanceHearing from "./pages/BlogBalanceHearing";
+import BlogPreventHearingLoss from "./pages/BlogPreventHearingLoss";
+import BlogTinnitusMemory from "./pages/BlogTinnitusMemory";
 
 
 const App = () => {
@@ -47,6 +51,10 @@ const App = () => {
           <Route path="/hearing-aids" element={<BestHearingAids />} />
           <Route path="/hearing-aids/brands" element={<HearingAidBrands />} />
           <Route path="/hearing-aids/otc" element={<OTCHearingAids />} />
+          <Route path="/blog/social-isolation" element={<BlogSocialIsolation />} />
+          <Route path="/blog/balance-hearing" element={<BlogBalanceHearing />} />
+          <Route path="/blog/prevent-hearing-loss" element={<BlogPreventHearingLoss />} />
+          <Route path="/blog/tinnitus-memory" element={<BlogTinnitusMemory />} />
         </Routes>
 
       </main>
