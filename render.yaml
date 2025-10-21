@@ -1,10 +1,20 @@
 services:
-  - type: web
+  # Frontend - Static Site (already deployed)
+  - type: static
     name: hearing-clinic
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://hearing-clinic-backend.onrender.com
+  
+  # Backend - Web Service (already deployed)
+  - type: web
+    name: hearing-clinic-backend
     env: node
     plan: free
-    buildCommand: npm install && npm run build
-    startCommand: npm start
+    buildCommand: npm install
+    startCommand: npm run start:backend
     envVars:
       - key: NODE_ENV
         value: production
