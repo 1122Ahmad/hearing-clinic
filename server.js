@@ -23,6 +23,9 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
       process.env.FRONTEND_URL,
       process.env.FRONTEND_URL?.replace(/\/$/, ''), // Remove trailing slash
       process.env.FRONTEND_URL + '/', // Add trailing slash
+      'https://hearingclinicislamabad.com', // Custom domain
+      'https://www.hearingclinicislamabad.com', // WWW subdomain
+      'https://hearing-clinic.onrender.com', // Render subdomain
     ].filter(Boolean) // Remove undefined values
   : [
       'http://localhost:5173', 
